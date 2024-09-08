@@ -143,7 +143,6 @@ function fromGithubChoice(
   jsonMode = false,
 ): CandidateData {
   //   const toolRequestParts = choice.message.tool_calls?.map(fromMistralToolCall);
-  console.log("CHOIIIICE:" + { choice });
   return {
     index: choice.index,
     finishReason:
@@ -168,22 +167,20 @@ function fromGithubChoice(
   };
 }
 
-// function fromGithubChunkChoice(
-//   choice: GenerateResponseChunkData['choices'][0]
-// ): CandidateData {
-//   choice.custom
-//   return {
-//     index: choice.index,
-//     finishReason: choice.content
-//       ? finishReasonMap[choice.finishReason] || 'other'
-//       : 'unknown',
-//     message: {
-//       role: 'model',
-//       content: [{ text: choice.delta.content! }],
-//     },
-//     custom: {},
-//   };
-// }
+function fromGithubChunkChoice(choice: any): CandidateData {
+  choice.custom;
+  return {
+    index: choice.index,
+    finishReason: choice.content
+      ? finishReasonMap[choice.finishReason] || "other"
+      : "unknown",
+    message: {
+      role: "model",
+      content: [{ text: choice.delta?.content ?? "" }],
+    },
+    custom: {},
+  };
+}
 
 export function toGithubRequestBody(
   modelName: string,
@@ -194,14 +191,30 @@ export function toGithubRequestBody(
   const githubMessages = toGithubMessages(request.messages);
 
   let responseFormat;
-  if (request.output?.format !== "json") {
-    responseFormat = { type: "json_object" };
+  const response_format = request.output?.format;
+  if (
+    response_format === "json" &&
+    model.info.supports?.output?.includes("json")
+  ) {
+    responseFormat = {
+      type: "json_object",
+    };
     githubMessages.push({
-      role: "user",
+      role: "system",
       content: "Write it in JSON",
-    } as ChatRequestUserMessage);
+    } as ChatRequestSystemMessage);
+  } else if (
+    (response_format === "text" &&
+      model.info.supports?.output?.includes("text")) ||
+    model.info.supports?.output?.includes("text")
+  ) {
+    responseFormat = {
+      type: "text",
+    };
   } else {
-    responseFormat = null;
+    throw new Error(
+      `${response_format} format is not supported for GPT models currently`,
+    );
   }
   const body = {
     body: {
@@ -251,14 +264,14 @@ export function githubModel(
         const sseStream = createSseStream(stream as any);
         for await (const event of sseStream) {
           if (event.data === "[DONE]") {
-            continue;
+            break;
           }
           for (const choice of JSON.parse(event.data).choices) {
-            // const c = fromGithubChunkChoice(choice);
-            // streamingCallback({
-            //   index: c.index,
-            //   content: c.message.content,
-            // });
+            const c = fromGithubChunkChoice(choice);
+            streamingCallback({
+              index: c.index,
+              content: c.message.content,
+            });
           }
         }
       } else {
