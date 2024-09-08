@@ -19,19 +19,15 @@ import {
   CandidateData,
   defineModel,
   GenerateRequest,
-  GenerateResponseChunkData,
   GenerationCommonConfigSchema,
   MessageData,
   ModelAction,
   modelRef,
-  Part,
   Role,
   ToolDefinition,
   ToolRequestPart,
-  ModelReference, // Add this line
 } from "@genkit-ai/ai/model";
 
-import z, { ZodTypeAny } from "zod";
 import {
   ChatChoiceOutput,
   ChatRequestAssistantMessage,
@@ -42,7 +38,9 @@ import {
   ModelClient,
   GetChatCompletionsDefaultResponse,
   GetChatCompletions200Response,
-  GetChatCompletions,
+  ChatCompletionsToolCall,
+  ChatCompletionsToolDefinition,
+  FunctionDefinition,
 } from "@azure-rest/ai-inference";
 import { createSseStream } from "@azure/core-sse";
 
@@ -77,16 +75,16 @@ function toGithubRole(role: Role): string {
   }
 }
 
-// function toMistralTool(tool: ToolDefinition): Tool {
-//   return {
-//     type: 'function',
-//     function: {
-//       name: tool.name,
-//       parameters: tool.inputSchema,
-//       description: tool.description,
-//     } as Function,
-//   };
-// }
+function toGithubTool(tool: ToolDefinition): ChatCompletionsToolDefinition {
+  return {
+    type: "function",
+    function: {
+      name: tool.name,
+      arguments: tool.inputSchema,
+      description: tool.description,
+    } as FunctionDefinition,
+  };
+}
 
 export function toGithubMessages(
   messages: MessageData[],
@@ -123,27 +121,27 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "gpt-4o": openAIGpt4o,
 };
 
-// function fromMistralToolCall(toolCall: ToolCalls) {
-//   if (!toolCall.function) {
-//     throw Error(
-//       `Unexpected mistral chunk choice. tool_calls was provided but one or more tool_calls is missing.`
-//     );
-//   }
-//   const f = toolCall.function;
-//   return {
-//     toolRequest: {
-//       name: f.name,
-//       ref: toolCall.id,
-//       input: f.arguments ? JSON.parse(f.arguments) : f.arguments,
-//     },
-//   };
-// }
+function fromGithubToolCall(toolCall: ChatCompletionsToolCall) {
+  if (!("function" in toolCall)) {
+    throw Error(
+      `Unexpected github chunk choice. tool_calls was provided but one or more tool_calls is missing.`,
+    );
+  }
+  const f = toolCall.function;
+  return {
+    toolRequest: {
+      name: f.name,
+      ref: toolCall.id,
+      input: f.arguments ? JSON.parse(f.arguments) : f.arguments,
+    },
+  };
+}
 
 function fromGithubChoice(
   choice: ChatChoiceOutput,
   jsonMode = false,
 ): CandidateData {
-  //   const toolRequestParts = choice.message.tool_calls?.map(fromMistralToolCall);
+  const toolRequestParts = choice.message.tool_calls?.map(fromGithubToolCall);
   return {
     index: choice.index,
     finishReason:
@@ -152,17 +150,14 @@ function fromGithubChoice(
         : "other",
     message: {
       role: "model",
-      content:
-        //   content: toolRequestParts
-        //     ? // Note: Not sure why I have to cast here exactly.
-        //       // Otherwise it thinks toolRequest must be 'undefined' if provided
-        //       (toolRequestParts as ToolRequestPart[])
-        //     : [{ text: choice.message.content! }],
-        [
-          jsonMode
-            ? { data: JSON.parse(choice.message.content!) }
-            : { text: choice.message.content! },
-        ],
+      content: toolRequestParts
+        ? 
+          (toolRequestParts as ToolRequestPart[])
+        : [
+            jsonMode
+              ? { data: JSON.parse(choice.message.content!) }
+              : { text: choice.message.content! },
+          ],
     },
     custom: {},
   };
@@ -220,7 +215,7 @@ export function toGithubRequestBody(
   const body = {
     body: {
       messages: githubMessages,
-      // tools: request.tools?.map(toMistralTool),
+      tools: request.tools?.map(toGithubTool),
       model: request.config?.version || model.version || modelName,
       max_tokens: request.config?.maxOutputTokens,
       temperature: request.config?.temperature,
