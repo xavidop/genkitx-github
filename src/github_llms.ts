@@ -53,12 +53,13 @@ export const openAIGpt4o = modelRef({
     label: "OpenAI - GPT-4o",
     supports: {
       multiturn: true,
-      tools: false,
+      tools: true,
       media: false,
       systemRole: true,
       output: ["text", "json"],
     },
   },
+  configSchema: GenerationCommonConfigSchema,
 });
 
 function toGithubRole(role: Role): string {
@@ -72,7 +73,7 @@ function toGithubRole(role: Role): string {
     case "tool":
       return "tool";
     default:
-      throw new Error(`role ${role} doesn't map to an Mistral role.`);
+      throw new Error(`role ${role} doesn't map to an Github Models role.`);
   }
 }
 
@@ -241,7 +242,6 @@ export function githubModel(
   name: string,
   client: ModelClient,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
-  //Ugly any type, should be MistralClient but cannot import it here
   const modelId = `github/${name}`;
   const model = SUPPORTED_GITHUB_MODELS[name];
   if (!model) throw new Error(`Unsupported model: ${name}`);
