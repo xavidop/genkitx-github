@@ -7,7 +7,7 @@
 <h4 align="center">Github Models Community Plugin for Google Firebase Genkit</h4>
 
 <div align="center">
-   <img alt="Github lerna version" src="https://img.shields.io/github/lerna-json/v/xavidop/genkitx-github?label=version">
+   <img alt="Github version" src="https://img.shields.io/github/v/release/xavidop/genkitx-github?label=version">
    <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/genkitx-github">
    <img alt="GitHub License" src="https://img.shields.io/github/license/xavidop/genkitx-github">
    <img alt="Static Badge" src="https://img.shields.io/badge/yes-a?label=maintained">
