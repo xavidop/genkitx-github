@@ -60,6 +60,326 @@ export const openAIGpt4o = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const openAIGpt4oMini = modelRef({
+  name: "github/gpt-4o-mini",
+  info: {
+    versions: ["gpt-4o-mini"],
+    label: "OpenAI - GPT-4o-mini",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama370bInstruct = modelRef({
+  name: "github/meta-llama-3-70b-instruct",
+  info: {
+    versions: ["meta-llama-3-70b-instruct"],
+    label: "Meta - Llama-3-70b-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama38bInstruct = modelRef({
+  name: "github/meta-llama-3-8b-instruct",
+  info: {
+    versions: ["meta-llama-3-8b-instruct"],
+    label: "Meta - Llama-3-8b-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama31405bInstruct = modelRef({
+  name: "github/meta-llama-3.1-405b-instruct",
+  info: {
+    versions: ["meta-llama-3.1-405b-instruct"],
+    label: "Meta - Llama-3.1-405b-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3170bInstruct = modelRef({
+  name: "github/meta-llama-3.1-70b-instruct",
+  info: {
+    versions: ["meta-llama-3.1-70b-instruct"],
+    label: "Meta - Llama-3.1-70b-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama318bInstruct = modelRef({
+  name: "github/meta-llama-3.1-8b-instruct",
+  info: {
+    versions: ["meta-llama-3.1-8b-instruct"],
+    label: "Meta - Llama-3.1-8b-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandR = modelRef({
+  name: "github/cohere-command-r",
+  info: {
+    versions: ["cohere-command-r"],
+    label: "Cohere - Command-r",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandRPlus = modelRef({
+  name: "github/cohere-command-r-plus",
+  info: {
+    versions: ["cohere-command-r-plus"],
+    label: "Cohere - Command-r-plus",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistralSmall = modelRef({
+  name: "github/mistral-small",
+  info: {
+    versions: ["Mistral-small"],
+    label: "Mistral - Small",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistralLarge = modelRef({
+  name: "github/mistral-large",
+  info: {
+    versions: ["Mistral-large"],
+    label: "Mistral - Large",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistralLarge2407 = modelRef({
+  name: "github/mistral-large-2407",
+  info: {
+    versions: ["Mistral-large-2407"],
+    label: "Mistral - Large-2407",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const mistralNemo = modelRef({
+  name: "github/mistral-nemo",
+  info: {
+    versions: ["Mistral-nemo"],
+    label: "Mistral - Nemo",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jamba15Mini = modelRef({
+  name: "github/ai21-jamba-1.5-mini",
+  info: {
+    versions: ["ai21-jamba-1.5-mini"],
+    label: "AI21Labs - Jamba-1.5-mini",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ai21Jamba15Large = modelRef({
+  name: "github/ai21-jamba-1.5-large",
+  info: {
+    versions: ["ai21-jamba-1.5-large"],
+    label: "AI21Labs - Jamba-1.5-large",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi3Mini4kInstruct = modelRef({
+  name: "github/phi-3-mini-4k-instruct",
+  info: {
+    versions: ["Phi-3-mini-4k-instruct"],
+    label: "Microsoft - Phi-3-mini-4k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi3Mini128kInstruct = modelRef({
+  name: "github/phi-3-mini-128k-instruct",
+  info: {
+    versions: ["Phi-3-mini-128k-instruct"],
+    label: "Microsoft - Phi-3-mini-128k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi3Small8kInstruct = modelRef({
+  name: "github/phi-3-small-8k-instruct",
+  info: {
+    versions: ["Phi-3-small-8k-instruct"],
+    label: "Microsoft - Phi-3-small-8k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi3Small128kInstruct = modelRef({
+  name: "github/phi-3-small-128k-instruct",
+  info: {
+    versions: ["Phi-3-small-128k-instruct"],
+    label: "Microsoft - Phi-3-small-128k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi3Medium4kInstruct = modelRef({
+  name: "github/phi-3-medium-4k-instruct",
+  info: {
+    versions: ["Phi-3-medium-4k-instruct"],
+    label: "Microsoft - Phi-3-medium-4k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi35Mini128kInstruct = modelRef({
+  name: "github/phi-3.5-mini-128k-instruct",
+  info: {
+    versions: ["Phi-3.5-mini-128k-instruct"],
+    label: "Microsoft - Phi-3.5-mini-128k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 function toGithubRole(role: Role): string {
   switch (role) {
     case "user":

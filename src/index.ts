@@ -1,10 +1,55 @@
 import { genkitPlugin, GenkitError, Plugin } from "@genkit-ai/core";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
-import { defineModel, GenerationCommonConfigSchema } from "@genkit-ai/ai/model";
-import { simulateSystemPrompt } from "@genkit-ai/ai/model/middleware";
-import { z } from "zod";
-import { githubModel, SUPPORTED_GITHUB_MODELS } from "./github_llms.js";
+import {
+  githubModel,
+  openAIGpt4o,
+  openAIGpt4oMini,
+  metaLlama370bInstruct,
+  metaLlama38bInstruct,
+  metaLlama31405bInstruct,
+  metaLlama3170bInstruct,
+  metaLlama318bInstruct,
+  cohereCommandR,
+  cohereCommandRPlus,
+  mistralSmall,
+  mistralLarge,
+  mistralLarge2407,
+  mistralNemo,
+  ai21Jamba15Mini,
+  ai21Jamba15Large,
+  microsoftPhi3Mini4kInstruct,
+  microsoftPhi3Mini128kInstruct,
+  microsoftPhi3Small8kInstruct,
+  microsoftPhi3Small128kInstruct,
+  microsoftPhi3Medium4kInstruct,
+  microsoftPhi35Mini128kInstruct,
+  SUPPORTED_GITHUB_MODELS,
+} from "./github_llms.js";
+
+export {
+  openAIGpt4o,
+  openAIGpt4oMini,
+  metaLlama370bInstruct,
+  metaLlama38bInstruct,
+  metaLlama31405bInstruct,
+  metaLlama3170bInstruct,
+  metaLlama318bInstruct,
+  cohereCommandRPlus,
+  cohereCommandR,
+  mistralSmall,
+  mistralLarge,
+  mistralLarge2407,
+  mistralNemo,
+  ai21Jamba15Mini,
+  ai21Jamba15Large,
+  microsoftPhi3Mini4kInstruct,
+  microsoftPhi3Mini128kInstruct,
+  microsoftPhi3Small8kInstruct,
+  microsoftPhi3Small128kInstruct,
+  microsoftPhi3Medium4kInstruct,
+  microsoftPhi35Mini128kInstruct,
+};
 
 export interface PluginOptions {
   githubToken?: string;
