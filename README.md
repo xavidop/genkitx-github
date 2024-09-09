@@ -22,7 +22,7 @@
 </br>
 
 **`genkitx-github`** is a community plugin for using Github Models APIs with
-[Firebase Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop). 🔥
+[Firebase Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop).
 
 This Genkit plugin allows to use Github models through their official APIs.
 
