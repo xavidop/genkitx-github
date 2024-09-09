@@ -204,6 +204,7 @@ export const mistralSmall = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+
 export const mistralLarge = modelRef({
   name: "github/mistral-large",
   info: {
@@ -380,6 +381,30 @@ export const microsoftPhi35Mini128kInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
+  "gpt-4o": openAIGpt4o,
+  "gpt-4o-mini": openAIGpt4oMini,
+  "meta-llama-3-70b-instruct": metaLlama370bInstruct,
+  "meta-llama-3-8b-instruct": metaLlama38bInstruct,
+  "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
+  "meta-llama-3.1-70b-instruct": metaLlama3170bInstruct,
+  "meta-llama-3.1-8b-instruct": metaLlama318bInstruct,
+  "cohere-command-r": cohereCommandR,
+  "cohere-command-r-plus": cohereCommandRPlus,
+  "Mistral-small": mistralSmall,
+  "Mistral-large": mistralLarge,
+  "Mistral-large-2407": mistralLarge2407,
+  "Mistral-nemo": mistralNemo,
+  "ai21-jamba-1.5-mini": ai21Jamba15Mini,
+  "ai21-jamba-1.5-large": ai21Jamba15Large,
+  "Phi-3-mini-4k-instruct": microsoftPhi3Mini4kInstruct,
+  "Phi-3-mini-128k-instruct": microsoftPhi3Mini128kInstruct,
+  "Phi-3-small-8k-instruct": microsoftPhi3Small8kInstruct,
+  "Phi-3-small-128k-instruct": microsoftPhi3Small128kInstruct,
+  "Phi-3-medium-4k-instruct": microsoftPhi3Medium4kInstruct,
+  "Phi-3.5-mini-128k-instruct": microsoftPhi35Mini128kInstruct,
+};
+
 function toGithubRole(role: Role): string {
   switch (role) {
     case "user":
@@ -510,10 +535,6 @@ const finishReasonMap: Record<
   stop: "stop",
   tool_calls: "stop",
   content_filter: "blocked",
-};
-
-export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
-  "gpt-4o": openAIGpt4o,
 };
 
 function fromGithubToolCall(toolCall: ChatCompletionsToolCall) {
