@@ -464,12 +464,20 @@ export function toGithubMessages(
     const role = toGithubRole(message.role);
     switch (role) {
       case "user":
+        const textAndMedia = msg.content.map((part) =>
+          toGithubTextAndMedia(part, visualDetailLevel),
+        );
+        if (textAndMedia.length > 1){
+          githubMsgs.push({
+            role: role,
+            content: textAndMedia,
+        });
+      }else {
         githubMsgs.push({
           role: role,
-          content: msg.content.map((part) =>
-            toGithubTextAndMedia(part, visualDetailLevel),
-          ),
+          content: msg.text(),
         });
+      }
         break;
       case "system":
         githubMsgs.push({
