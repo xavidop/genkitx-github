@@ -138,6 +138,14 @@ console.log(result.then((res) => res.text()));
 
 For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://firebase.google.com/docs/genkit/get-started).
 
+## Supported models
+
+This plugins supports all currently **Chat/Completition** available models from Github Models.
+
+Still in progress:
+1. Embedding models
+2. Support for image input/output models
+
 ## Contributing
 
 Want to contribute to the project? That's awesome! Head over to our [Contribution Guidelines](https://github.com/xavidop/genkitx-github/blob/main/CONTRIBUTING.md).
@@ -151,7 +159,9 @@ Reach out by opening a discussion on [Github Discussions](https://github.com/xav
 
 ## Credits
 
-This plugin is proudly maintained by Xavier Portilla Edo [**Xavier Portilla Edo**](https://github.com/xavidop). 🔥
+This plugin is proudly maintained by Xavier Portilla Edo [**Xavier Portilla Edo**](https://github.com/xavidop).
+
+I got the inspiration, structure and patterns to create this plugin from the [Genkit Community Plugins](https://github.com/TheFireCo/genkit-plugins) repository built by the [Fire Compnay](https://github.com/TheFireCo) as well as the [ollama plugin](https://firebase.google.com/docs/genkit/plugins/ollama).
 
 ## License
 
