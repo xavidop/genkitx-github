@@ -23,6 +23,7 @@ import {
   MessageData,
   ModelAction,
   modelRef,
+  Part,
   Role,
   ToolDefinition,
   ToolRequestPart,
@@ -30,17 +31,16 @@ import {
 
 import {
   ChatChoiceOutput,
-  ChatRequestAssistantMessage,
   ChatRequestMessage,
   ChatRequestSystemMessage,
-  ChatRequestToolMessage,
-  ChatRequestUserMessage,
   ModelClient,
   GetChatCompletionsDefaultResponse,
   GetChatCompletions200Response,
   ChatCompletionsToolCall,
   ChatCompletionsToolDefinition,
   FunctionDefinition,
+  ChatMessageContentItem,
+  ChatMessageImageDetailLevel,
 } from "@azure-rest/ai-inference";
 import { createSseStream } from "@azure/core-sse";
 
@@ -80,30 +80,105 @@ function toGithubTool(tool: ToolDefinition): ChatCompletionsToolDefinition {
     type: "function",
     function: {
       name: tool.name,
-      arguments: tool.inputSchema,
+      parameters: tool.inputSchema,
       description: tool.description,
     } as FunctionDefinition,
   };
 }
 
+export function toGithubTextAndMedia(
+  part: Part,
+  visualDetailLevel: ChatMessageImageDetailLevel,
+): ChatMessageContentItem {
+  if (part.text) {
+    return {
+      type: "text",
+      text: part.text,
+    };
+  } else if (part.media) {
+    return {
+      type: "image_url",
+      image_url: {
+        url: part.media.url,
+        detail: visualDetailLevel,
+      },
+    };
+  }
+  throw Error(
+    `Unsupported genkit part fields encountered for current message role: ${part}.`,
+  );
+}
+
 export function toGithubMessages(
   messages: MessageData[],
+  visualDetailLevel: ChatMessageImageDetailLevel = "auto",
 ): ChatRequestMessage[] {
   const githubMsgs: ChatRequestMessage[] = [];
   for (const message of messages) {
     const msg = new Message(message);
     const role = toGithubRole(message.role);
-
-    githubMsgs.push({
-      role: role,
-      content: msg.text(),
-    } as
-      | ChatRequestSystemMessage
-      | ChatRequestUserMessage
-      | ChatRequestAssistantMessage
-      | ChatRequestToolMessage);
+    switch (role) {
+      case "user":
+        githubMsgs.push({
+          role: role,
+          content: msg.content.map((part) =>
+            toGithubTextAndMedia(part, visualDetailLevel),
+          ),
+        });
+        break;
+      case "system":
+        githubMsgs.push({
+          role: role,
+          content: msg.text(),
+        });
+        break;
+      case "assistant":
+        const toolCalls: ChatCompletionsToolCall[] = msg.content
+          .filter((part) => part.toolRequest)
+          .map((part) => {
+            if (!part.toolRequest) {
+              throw Error(
+                "Mapping genkit message to openai tool call content part but message.toolRequest not provided.",
+              );
+            }
+            return {
+              id: part.toolRequest.ref || "",
+              type: "function",
+              function: {
+                name: part.toolRequest.name,
+                arguments: JSON.stringify(part.toolRequest.input),
+              },
+            };
+          });
+        if (toolCalls?.length > 0) {
+          githubMsgs.push({
+            role: role,
+            tool_calls: toolCalls,
+          });
+        } else {
+          githubMsgs.push({
+            role: role,
+            content: msg.text(),
+          });
+        }
+        break;
+      case "tool":
+        const toolResponseParts = msg.toolResponseParts();
+        toolResponseParts.map((part) => {
+          githubMsgs.push({
+            role: role,
+            tool_call_id: part.toolResponse.ref || "",
+            content:
+              typeof part.toolResponse.output === "string"
+                ? part.toolResponse.output
+                : JSON.stringify(part.toolResponse.output),
+          });
+        });
+        break;
+      default:
+        throw new Error("unrecognized role");
+    }
   }
-
   return githubMsgs;
 }
 
@@ -151,8 +226,7 @@ function fromGithubChoice(
     message: {
       role: "model",
       content: toolRequestParts
-        ? 
-          (toolRequestParts as ToolRequestPart[])
+        ? (toolRequestParts as ToolRequestPart[])
         : [
             jsonMode
               ? { data: JSON.parse(choice.message.content!) }
