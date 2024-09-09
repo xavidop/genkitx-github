@@ -642,8 +642,8 @@ export function toGithubRequestBody(
   } as any;
 
   for (const key in body.body) {
-    if (!body[key] || (Array.isArray(body[key]) && !body[key].length))
-      delete body[key];
+    if (!body.body[key] || (Array.isArray(body.body[key]) && !body.body[key].length))
+      delete body.body[key];
   }
   return body;
 }
