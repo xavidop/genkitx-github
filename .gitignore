@@ -6,3 +6,5 @@ lib/
 plugins/.DS_Store
 lerna-debug.log
 .DS_Store
+
+docs
