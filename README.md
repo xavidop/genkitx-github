@@ -68,7 +68,6 @@ configureGenkit({
 });
 ```
 
-
 ### Basic examples
 
 The simplest way to call the text generation model is by using the helper function `generate`:
@@ -145,6 +144,10 @@ This plugins supports all currently **Chat/Completition** available models from 
 Still in progress:
 1. Embedding models
 2. Support for image input/output models
+
+## API Reference
+
+You can find the full API reference in the [API Reference Documentation](https://xavidop.github.io/genkitx-github/)
 
 ## Contributing
 
