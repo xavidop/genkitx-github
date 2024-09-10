@@ -13,9 +13,9 @@
     "generative-ai"
   ],
   "version": "1.0.0",
-  "type": "commonjs",
+  "type": "module",
   "main": "lib/cjs/index.js",
-  "module": "./dist/esm/index.mjs",
+  "module": "./lib/esm/index.mjs",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xavidop/genkitx-github.git"

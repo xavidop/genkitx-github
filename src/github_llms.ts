@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 
 import { Message } from "@genkit-ai/ai";
 import {
@@ -203,7 +205,6 @@ export const mistralSmall = modelRef({
   },
   configSchema: GenerationCommonConfigSchema,
 });
-
 
 export const mistralLarge = modelRef({
   name: "github/mistral-large",
@@ -463,29 +464,30 @@ export function toGithubMessages(
     const msg = new Message(message);
     const role = toGithubRole(message.role);
     switch (role) {
-      case "user":
+      case "user": {
         const textAndMedia = msg.content.map((part) =>
           toGithubTextAndMedia(part, visualDetailLevel),
         );
-        if (textAndMedia.length > 1){
+        if (textAndMedia.length > 1) {
           githubMsgs.push({
             role: role,
             content: textAndMedia,
-        });
-      }else {
-        githubMsgs.push({
-          role: role,
-          content: msg.text(),
-        });
-      }
+          });
+        } else {
+          githubMsgs.push({
+            role: role,
+            content: msg.text(),
+          });
+        }
         break;
+      }
       case "system":
         githubMsgs.push({
           role: role,
           content: msg.text(),
         });
         break;
-      case "assistant":
+      case "assistant": {
         const toolCalls: ChatCompletionsToolCall[] = msg.content
           .filter((part) => part.toolRequest)
           .map((part) => {
@@ -515,7 +517,8 @@ export function toGithubMessages(
           });
         }
         break;
-      case "tool":
+      }
+      case "tool": {
         const toolResponseParts = msg.toolResponseParts();
         toolResponseParts.map((part) => {
           githubMsgs.push({
@@ -528,6 +531,7 @@ export function toGithubMessages(
           });
         });
         break;
+      }
       default:
         throw new Error("unrecognized role");
     }
@@ -587,7 +591,6 @@ function fromGithubChoice(
 }
 
 function fromGithubChunkChoice(choice: any): CandidateData {
-  choice.custom;
   return {
     index: choice.index,
     finishReason: choice.content
@@ -598,7 +601,7 @@ function fromGithubChunkChoice(choice: any): CandidateData {
       content: [{ text: choice.delta?.content ?? "" }],
     },
     custom: {},
-  };
+  } as CandidateData;
 }
 
 export function toGithubRequestBody(

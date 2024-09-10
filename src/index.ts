@@ -1,4 +1,4 @@
-import { genkitPlugin, GenkitError, Plugin } from "@genkit-ai/core";
+import { genkitPlugin, Plugin } from "@genkit-ai/core";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import {
