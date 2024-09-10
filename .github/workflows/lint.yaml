@@ -1,0 +1,33 @@
+name: yarnci-lint
+on:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
+  pull_request:
+permissions:
+  contents: read
+
+jobs:
+  yarnci:
+    permissions:
+      contents: read  # for actions/checkout to fetch code
+      pull-requests: read  # for yarnci/yarnci-lint-action to fetch pull requests
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          cache: yarn
+          node-version: lts/*
+      - name: install
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: install --frozen-lockfile
+      - name: lint
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: lint
