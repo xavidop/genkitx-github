@@ -19,6 +19,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
+    - name: install
+      uses: borales/actions-yarn@v4
+      with:
+        cmd: install --frozen-lockfile
     - run: yarn build
     - name: SonarCloud Scan
       if: env.SONAR_TOKEN != null
