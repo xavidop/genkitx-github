@@ -53,7 +53,7 @@ export const openAIGpt4o = modelRef({
     supports: {
       multiturn: true,
       tools: true,
-      media: false,
+      media: true,
       systemRole: true,
       output: ["text", "json"],
     },
@@ -69,7 +69,7 @@ export const openAIGpt4oMini = modelRef({
     supports: {
       multiturn: true,
       tools: true,
-      media: false,
+      media: true,
       systemRole: true,
       output: ["text", "json"],
     },
