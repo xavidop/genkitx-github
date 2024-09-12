@@ -139,7 +139,7 @@ For more detailed examples and the explanation of other functionalities, refer t
 
 ## Supported models
 
-This plugins supports all currently **Chat/Completition** and **Embeddings** available models from Github Models.
+This plugin supports all currently available **Chat/Completion** and **Embeddings** models from Github Models.
 
 Still in progress:
 1. Support for image input/output models
