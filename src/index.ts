@@ -26,6 +26,14 @@ import {
   microsoftPhi35Mini128kInstruct,
   SUPPORTED_GITHUB_MODELS,
 } from "./github_llms.js";
+import {
+  cohereEmbedv3English,
+  cohereEmbedv3Multilingual,
+  githubEmbedder,
+  openAITextEmbedding3Large,
+  openAITextEmbedding3Small,
+  SUPPORTED_EMBEDDING_MODELS,
+} from "./github_embedders.js";
 
 export {
   openAIGpt4o,
@@ -49,6 +57,13 @@ export {
   microsoftPhi3Small128kInstruct,
   microsoftPhi3Medium4kInstruct,
   microsoftPhi35Mini128kInstruct,
+};
+
+export {
+  openAITextEmbedding3Small,
+  openAITextEmbedding3Large,
+  cohereEmbedv3English,
+  cohereEmbedv3Multilingual,
 };
 
 export interface PluginOptions {
@@ -78,7 +93,9 @@ export const github: Plugin<[PluginOptions]> = genkitPlugin(
           githubModel(name, client),
         ),
       ],
-      embedders: [],
+      embedders: Object.keys(SUPPORTED_EMBEDDING_MODELS).map((name) =>
+        githubEmbedder(name, options),
+      ),
     };
   },
 );

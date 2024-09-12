@@ -15,7 +15,6 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-
 import { Message } from "@genkit-ai/ai";
 import {
   CandidateData,
@@ -653,7 +652,10 @@ export function toGithubRequestBody(
   } as any;
 
   for (const key in body.body) {
-    if (!body.body[key] || (Array.isArray(body.body[key]) && !body.body[key].length))
+    if (
+      !body.body[key] ||
+      (Array.isArray(body.body[key]) && !body.body[key].length)
+    )
       delete body.body[key];
   }
   return body;
