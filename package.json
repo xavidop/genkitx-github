@@ -13,7 +13,7 @@
     "generative-ai"
   ],
   "version": "1.0.0",
-  "type": "module",
+  "type": "commonjs",
   "main": "lib/cjs/index.js",
   "module": "./lib/esm/index.mjs",
   "repository": {
