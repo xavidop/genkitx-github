@@ -189,6 +189,25 @@
     zod "^3.22.4"
     zod-to-json-schema "^3.22.4"
 
+"@genkit-ai/core@^0.5.0":
+  version "0.5.13"
+  resolved "https://registry.yarnpkg.com/@genkit-ai/core/-/core-0.5.13.tgz#447e75e85b788889e2ea6d50462b0d72cfa9b36b"
+  integrity sha512-KVXhZYNVjsQNK8j4BiJaK+JWsJ1lxWk9+kaUH5iEHE+I+fxTrOLidEsz+BL0gJLS9qim1j84+oYrd++9/hWBPw==
+  dependencies:
+    "@opentelemetry/api" "^1.9.0"
+    "@opentelemetry/context-async-hooks" "^1.25.0"
+    "@opentelemetry/core" "^1.25.0"
+    "@opentelemetry/sdk-metrics" "^1.25.0"
+    "@opentelemetry/sdk-node" "^0.52.0"
+    "@opentelemetry/sdk-trace-base" "^1.25.0"
+    ajv "^8.12.0"
+    ajv-formats "^3.0.1"
+    async-mutex "^0.5.0"
+    express "^4.19.2"
+    json-schema "^0.4.0"
+    zod "^3.22.4"
+    zod-to-json-schema "^3.22.4"
+
 "@grpc/grpc-js@^1.7.1":
   version "1.11.2"
   resolved "https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.11.2.tgz"
