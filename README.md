@@ -1,13 +1,13 @@
-![Firebase Genkit + Github Models](https://github.com/xavidop/genkitx-github/blob/main/assets/genkit-github.png?raw=true)
+![Firebase Genkit + GitHub Models](https://github.com/xavidop/genkitx-github/blob/main/assets/genkit-github.png?raw=true)
 
 <h1 align="center">
-   Firebase Genkit <> Github Models Plugin
+   Firebase Genkit <> GitHub Models Plugin
 </h1>
 
-<h4 align="center">Github Models Community Plugin for Google Firebase Genkit</h4>
+<h4 align="center">GitHub Models Community Plugin for Google Firebase Genkit</h4>
 
 <div align="center">
-   <img alt="Github version" src="https://img.shields.io/github/v/release/xavidop/genkitx-github">
+   <img alt="GitHub version" src="https://img.shields.io/github/v/release/xavidop/genkitx-github">
    <img alt="NPM Downloads" src="https://img.shields.io/npm/dw/genkitx-github">
    <img alt="GitHub License" src="https://img.shields.io/github/license/xavidop/genkitx-github">
    <img alt="Static Badge" src="https://img.shields.io/badge/yes-a?label=maintained">
@@ -21,10 +21,10 @@
 
 </br>
 
-**`genkitx-github`** is a community plugin for using Github Models APIs with
+**`genkitx-github`** is a community plugin for using GitHub Models APIs with
 [Firebase Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop).
 
-This Genkit plugin allows to use Github models through their official APIs.
+This Genkit plugin allows to use GitHub models through their official APIs.
 
 ## Installation
 
@@ -38,7 +38,7 @@ Install the plugin in your project with your favorite package manager:
 
 ### Configuration
 
-To use the plugin, you need to configure it with your Github Token key. You can do this by calling the `configureGenkit` function:
+To use the plugin, you need to configure it with your GitHub Token key. You can do this by calling the `configureGenkit` function:
 
 ```typescript
 import {github, openAIGpt4o} from "genkitx-github";
@@ -139,7 +139,7 @@ For more detailed examples and the explanation of other functionalities, refer t
 
 ## Supported models
 
-This plugin supports all currently available **Chat/Completion** and **Embeddings** models from Github Models. This plugin supports image input and multimodal models.
+This plugin supports all currently available **Chat/Completion** and **Embeddings** models from GitHub Models. This plugin supports image input and multimodal models.
 
 Still in progress:
 1. Support for image output models
@@ -157,7 +157,7 @@ Want to contribute to the project? That's awesome! Head over to our [Contributio
 > [!NOTE]  
 > This repository depends on Google's Firebase Genkit. For issues and questions related to Genkit, please refer to instructions available in [Genkit's repository](https://github.com/firebase/genkit).
 
-Reach out by opening a discussion on [Github Discussions](https://github.com/xavidop/genkitx-github/discussions).
+Reach out by opening a discussion on [GitHub Discussions](https://github.com/xavidop/genkitx-github/discussions).
 
 ## Credits
 
