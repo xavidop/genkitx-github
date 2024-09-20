@@ -77,6 +77,38 @@ export const openAIGpt4oMini = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const openAIO1Preview = modelRef({
+  name: "github/o1-preview",
+  info: {
+    versions: ["o1-preview"],
+    label: "OpenAI - o1-preview",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const openAIO1Mini = modelRef({
+  name: "github/o1-mini",
+  info: {
+    versions: ["o1-mini"],
+    label: "OpenAI - o1-mini",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const metaLlama370bInstruct = modelRef({
   name: "github/meta-llama-3-70b-instruct",
   info: {
@@ -384,6 +416,8 @@ export const microsoftPhi35Mini128kInstruct = modelRef({
 export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "gpt-4o": openAIGpt4o,
   "gpt-4o-mini": openAIGpt4oMini,
+  "o1-preview": openAIO1Preview,
+  "o1-mini": openAIO1Mini,
   "meta-llama-3-70b-instruct": metaLlama370bInstruct,
   "meta-llama-3-8b-instruct": metaLlama38bInstruct,
   "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
