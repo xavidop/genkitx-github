@@ -5,6 +5,8 @@ import {
   githubModel,
   openAIGpt4o,
   openAIGpt4oMini,
+  openAIO1Preview,
+  openAIO1Mini,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
@@ -38,6 +40,8 @@ import {
 export {
   openAIGpt4o,
   openAIGpt4oMini,
+  openAIO1Preview,
+  openAIO1Mini,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
