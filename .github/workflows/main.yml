@@ -26,6 +26,6 @@ jobs:
     - run: yarn build
     - name: SonarCloud Scan
       if: env.SONAR_TOKEN != null
-      uses: SonarSource/sonarcloud-github-action@v2
+      uses: SonarSource/sonarcloud-github-action@v3
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
