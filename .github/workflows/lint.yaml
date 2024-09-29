@@ -24,10 +24,10 @@ jobs:
           cache: yarn
           node-version: lts/*
       - name: install
-        uses: borales/actions-yarn@v4
+        uses: borales/actions-yarn@v5
         with:
           cmd: install --frozen-lockfile
       - name: lint
-        uses: borales/actions-yarn@v4
+        uses: borales/actions-yarn@v5
         with:
           cmd: lint
