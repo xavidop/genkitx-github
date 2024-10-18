@@ -61,7 +61,7 @@ import {github, openAIGpt4o} from "genkitx-github";
 
 configureGenkit({
   plugins: [
-    github(),
+    github({}),
   ],
   logLevel: "debug",
   enableTracingAndMetrics: true,
