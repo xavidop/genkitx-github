@@ -611,7 +611,7 @@ function fromGithubChoice(
         : "other",
     message: {
       role: "model",
-      content: toolRequestParts
+      content: (toolRequestParts?.length ?? 0) > 0
         ? (toolRequestParts as ToolRequestPart[])
         : [
             jsonMode
