@@ -189,6 +189,38 @@ export const metaLlama318bInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const metaLlama3211bVisionInstruct = modelRef({
+  name: "github/meta-llama-3.2-11b-vision-instruct",
+  info: {
+    versions: ["Llama-3.2-11B-Vision-Instruct"],
+    label: "Meta - Llama-3.2-11b-vision-instructt",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama3290bVisionInstruct = modelRef({
+  name: "github/meta-llama-3.2-90b-vision-instruct",
+  info: {
+    versions: ["Llama-3.2-90B-Vision-Instruct"],
+    label: "Meta - Llama-3.2-90b-vision-instructt",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const cohereCommandR = modelRef({
   name: "github/cohere-command-r",
   info: {
@@ -205,11 +237,43 @@ export const cohereCommandR = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const cohereCommandR082024 = modelRef({
+  name: "github/cohere-command-r",
+  info: {
+    versions: ["Cohere-command-r-08-2024"],
+    label: "Cohere - Command-r-08-2024",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const cohereCommandRPlus = modelRef({
   name: "github/cohere-command-r-plus",
   info: {
     versions: ["cohere-command-r-plus"],
     label: "Cohere - Command-r-plus",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandRPlus082024 = modelRef({
+  name: "github/cohere-command-r",
+  info: {
+    versions: ["Cohere-command-r-plus-08-2024"],
+    label: "Cohere - Command-r-plus-08-2024",
     supports: {
       multiturn: true,
       tools: true,
@@ -398,10 +462,26 @@ export const microsoftPhi3Medium4kInstruct = modelRef({
 });
 
 export const microsoftPhi35Mini128kInstruct = modelRef({
-  name: "github/phi-3.5-mini-128k-instruct",
+  name: "github/phi-3.5-mini-instruct",
   info: {
-    versions: ["Phi-3.5-mini-128k-instruct"],
+    versions: ["Phi-3.5-mini-instruct"],
     label: "Microsoft - Phi-3.5-mini-128k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi35MoE128kInstruct = modelRef({
+  name: "github/phi-3.5-moe-instruct",
+  info: {
+    versions: ["Phi-3.5-moe-instruct"],
+    label: "Microsoft - Phi-3.5-moe-128k-instruct",
     supports: {
       multiturn: true,
       tools: true,
@@ -423,8 +503,12 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
   "meta-llama-3.1-70b-instruct": metaLlama3170bInstruct,
   "meta-llama-3.1-8b-instruct": metaLlama318bInstruct,
+  "Llama-3.2-11B-Vision-Instruct": metaLlama3211bVisionInstruct,
+  "Llama-3.2-90B-Vision-Instruct": metaLlama3290bVisionInstruct,
   "cohere-command-r": cohereCommandR,
   "cohere-command-r-plus": cohereCommandRPlus,
+  "cohere-command-r-08-2024": cohereCommandR082024,
+  "cohere-command-r-plus-08-2024": cohereCommandRPlus082024,
   "Mistral-small": mistralSmall,
   "Mistral-large": mistralLarge,
   "Mistral-large-2407": mistralLarge2407,
@@ -436,7 +520,8 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Phi-3-small-8k-instruct": microsoftPhi3Small8kInstruct,
   "Phi-3-small-128k-instruct": microsoftPhi3Small128kInstruct,
   "Phi-3-medium-4k-instruct": microsoftPhi3Medium4kInstruct,
-  "Phi-3.5-mini-128k-instruct": microsoftPhi35Mini128kInstruct,
+  "Phi-3.5-mini-instruct": microsoftPhi35Mini128kInstruct,
+  "Phi-3.5-moe-instruct": microsoftPhi35MoE128kInstruct,
 };
 
 function toGithubRole(role: Role): string {
