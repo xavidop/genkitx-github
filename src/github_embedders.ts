@@ -125,7 +125,7 @@ export function githubEmbedder(name: string, options?: PluginOptions) {
         .post(body)) as GetEmbeddings200Response;
       return {
         embeddings: embeddings.body.data.map((d) => ({
-          embedding: d.embedding,
+          embedding: Array.isArray(d.embedding) ? d.embedding : [],
         })),
       };
     },

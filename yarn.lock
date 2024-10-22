@@ -3,15 +3,16 @@
 
 
 "@azure-rest/ai-inference@^1.0.0-beta.2":
-  version "1.0.0-beta.2"
-  resolved "https://registry.npmjs.org/@azure-rest/ai-inference/-/ai-inference-1.0.0-beta.2.tgz"
-  integrity sha512-xPnXJmldQ7vufTT1GtoHPk+korWFnl72whoDB34tb9DALTGGBKIAWobDQBMGYdV2ce0/KdhRFPwnfeZjNyfVsw==
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@azure-rest/ai-inference/-/ai-inference-1.0.0-beta.3.tgz#36594335b2b10430a15aab7c0113ee18d6fc84b7"
+  integrity sha512-vCiQSD06F9w0FQMEQkH7SNrrjXkHtaHYwGm9J1V5+6XX6vTkqpTkJ2e/gVakNCi4bnNXdc5mecKZf5U/js1RXw==
   dependencies:
     "@azure-rest/core-client" "^2.1.0"
     "@azure/abort-controller" "^1.0.0"
     "@azure/core-auth" "^1.7.2"
     "@azure/core-lro" "^2.6.0"
     "@azure/core-rest-pipeline" "^1.14.0"
+    "@azure/core-tracing" "^1.2.0"
     "@azure/logger" "^1.0.0"
     tslib "^2.6.2"
 
@@ -81,10 +82,10 @@
   dependencies:
     tslib "^2.6.2"
 
-"@azure/core-tracing@^1.0.1":
-  version "1.1.2"
-  resolved "https://registry.npmjs.org/@azure/core-tracing/-/core-tracing-1.1.2.tgz"
-  integrity sha512-dawW9ifvWAWmUm9/h+/UQ2jrdvjCJ7VJEuCJ6XVNudzcOwm53BFZH4Q845vjfgoUAM8ZxokvVNxNxAITc502YA==
+"@azure/core-tracing@^1.0.1", "@azure/core-tracing@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@azure/core-tracing/-/core-tracing-1.2.0.tgz#7be5d53c3522d639cf19042cbcdb19f71bc35ab2"
+  integrity sha512-UKTiEJPkWcESPYJz3X5uKRYyOcJD+4nYph+KpfdPRnQJVrZfk0KJgdnaAWKfhsBBtAf/D58Az4AvCJEmWgIBAg==
   dependencies:
     tslib "^2.6.2"
 
