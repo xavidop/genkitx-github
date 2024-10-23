@@ -84,7 +84,7 @@ export const openAIO1Preview = modelRef({
     label: "OpenAI - o1-preview",
     supports: {
       multiturn: true,
-      tools: true,
+      tools: false,
       media: false,
       systemRole: false,
       output: ["text", "json"],
@@ -100,9 +100,9 @@ export const openAIO1Mini = modelRef({
     label: "OpenAI - o1-mini",
     supports: {
       multiturn: true,
-      tools: true,
-      media: true,
-      systemRole: true,
+      tools: false,
+      media: false,
+      systemRole: false,
       output: ["text", "json"],
     },
   },

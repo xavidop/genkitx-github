@@ -147,7 +147,7 @@ You can find the full API reference in the [API Reference Documentation](https:/
 
 ## Troubleshooting
 
-1. GPT o1-preview it is still in beta. It does not support system roles and the `temperature` and `topP` needs to be set to 1. See OpenAI annocement [here](https://openai.com/index/introducing-openai-o1-preview/)
+1. GPT `o1-preview` and `o1-mini` it is still in beta. It does not support system roles, tools and the `temperature` and `topP` needs to be set to `1`. See OpenAI annocement [here](https://openai.com/index/introducing-openai-o1-preview/)
 2. Cohere models only supports text output for now. Issue opened [here](https://github.com/orgs/community/discussions/142364).
 
 ## Contributing
