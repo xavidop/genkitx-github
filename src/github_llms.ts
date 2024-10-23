@@ -696,13 +696,14 @@ function fromGithubChoice(
         : "other",
     message: {
       role: "model",
-      content: (toolRequestParts?.length ?? 0) > 0
-        ? (toolRequestParts as ToolRequestPart[])
-        : [
-            jsonMode
-              ? { data: JSON.parse(choice.message.content!) }
-              : { text: choice.message.content! },
-          ],
+      content:
+        (toolRequestParts?.length ?? 0) > 0
+          ? (toolRequestParts as ToolRequestPart[])
+          : [
+              jsonMode
+                ? { data: JSON.parse(choice.message.content!) }
+                : { text: choice.message.content! },
+            ],
     },
     custom: {},
   };
@@ -756,7 +757,9 @@ export function toGithubRequestBody(
       `${response_format} format is not supported for GPT models currently`,
     );
   }
-  const modelString = (request.config?.version || model.version || modelName) as string;
+  const modelString = (request.config?.version ||
+    model.version ||
+    modelName) as string;
   const body = {
     body: {
       messages: githubMessages,

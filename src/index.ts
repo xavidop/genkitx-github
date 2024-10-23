@@ -1,7 +1,13 @@
 import { genkitPlugin, Plugin } from "@genkit-ai/core";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
-import { microsoftPhi35MoE128kInstruct, cohereCommandR082024, cohereCommandRPlus082024, metaLlama3211bVisionInstruct, metaLlama3290bVisionInstruct } from './github_llms';
+import {
+  microsoftPhi35MoE128kInstruct,
+  cohereCommandR082024,
+  cohereCommandRPlus082024,
+  metaLlama3211bVisionInstruct,
+  metaLlama3290bVisionInstruct,
+} from "./github_llms";
 import {
   githubModel,
   openAIGpt4o,
@@ -66,7 +72,7 @@ export {
   microsoftPhi3Small128kInstruct,
   microsoftPhi3Medium4kInstruct,
   microsoftPhi35Mini128kInstruct,
-  microsoftPhi35MoE128kInstruct
+  microsoftPhi35MoE128kInstruct,
 };
 
 export {

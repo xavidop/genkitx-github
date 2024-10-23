@@ -27,17 +27,6 @@ jobs:
         uses: borales/actions-yarn@v5
         with:
           cmd: install --frozen-lockfile
-      - name: 'Setup jq'
-        uses: dcarbone/install-jq-action@v2
-        with:
-          version: '1.7'
-          force: 'true'
-      - name: 'Set type module'
-        run: |
-          which jq
-          jq --version
-          tmp=$(mktemp)
-          jq '.type = "module"' package.json > "$tmp" && mv "$tmp" package.json
       - name: lint
         uses: borales/actions-yarn@v5
         with:
