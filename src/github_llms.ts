@@ -193,7 +193,7 @@ export const metaLlama3211bVisionInstruct = modelRef({
   name: "github/meta-llama-3.2-11b-vision-instruct",
   info: {
     versions: ["Llama-3.2-11B-Vision-Instruct"],
-    label: "Meta - Llama-3.2-11b-vision-instructt",
+    label: "Meta - Llama-3.2-11b-vision-instruct",
     supports: {
       multiturn: true,
       tools: true,
@@ -209,7 +209,7 @@ export const metaLlama3290bVisionInstruct = modelRef({
   name: "github/meta-llama-3.2-90b-vision-instruct",
   info: {
     versions: ["Llama-3.2-90B-Vision-Instruct"],
-    label: "Meta - Llama-3.2-90b-vision-instructt",
+    label: "Meta - Llama-3.2-90b-vision-instruct",
     supports: {
       multiturn: true,
       tools: true,
