@@ -756,17 +756,19 @@ export function toGithubRequestBody(
       `${response_format} format is not supported for GPT models currently`,
     );
   }
+  const modelString = (request.config?.version || model.version || modelName) as string;
   const body = {
     body: {
       messages: githubMessages,
       tools: request.tools?.map(toGithubTool),
-      model: request.config?.version || model.version || modelName,
+      model: modelString,
       max_tokens: request.config?.maxOutputTokens,
       temperature: request.config?.temperature,
       top_p: request.config?.topP,
       n: request.candidates,
       stop: request.config?.stopSequences,
-      response_format: responseFormat,
+      // FIXME: coherence models don't support response_format for now
+      response_format: modelString.includes("cohere") ? "" : responseFormat,
     },
   } as any;
 
