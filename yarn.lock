@@ -163,11 +163,11 @@
     levn "^0.4.1"
 
 "@genkit-ai/ai@^0.5.0":
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/@genkit-ai/ai/-/ai-0.5.16.tgz#a6d635655d00ef5770c4255b48f485cbc1802878"
-  integrity sha512-vqnysySnG/oZAxEl6UhL8idn4Baquobr9kHtluejtuIUScZb5MEWOmqlgxxzeOk8+55Vj99sZgPZO7zGpWUd8g==
+  version "0.5.17"
+  resolved "https://registry.yarnpkg.com/@genkit-ai/ai/-/ai-0.5.17.tgz#b13c0baa0691d0c197a95f92dc3009cda49bb4e3"
+  integrity sha512-pzOnD3F6l61ldBF7/ltsCFRapjuuonapP+vxyiG7IZArSgIn4cvLAr9gutNdm0BsaaoCjX13JnvHSNybJMg0OQ==
   dependencies:
-    "@genkit-ai/core" "0.5.16"
+    "@genkit-ai/core" "0.5.17"
     "@opentelemetry/api" "^1.9.0"
     "@types/node" "^20.11.19"
     colorette "^2.0.20"
@@ -176,10 +176,10 @@
     partial-json "^0.1.7"
     zod "^3.22.4"
 
-"@genkit-ai/core@0.5.16", "@genkit-ai/core@^0.5.0":
-  version "0.5.16"
-  resolved "https://registry.yarnpkg.com/@genkit-ai/core/-/core-0.5.16.tgz#e5cd8ab1e3f7a15836de25370361c2ee69cd9c64"
-  integrity sha512-GXud+N74LGRyhFg5U7/EgjqIOHRyYzdBQnThw/N6luApMrxUDERkTQFztz0AZHCB32XsKQVwhIiuAO3fHE0M5w==
+"@genkit-ai/core@0.5.17", "@genkit-ai/core@^0.5.0":
+  version "0.5.17"
+  resolved "https://registry.yarnpkg.com/@genkit-ai/core/-/core-0.5.17.tgz#737757bc802d7c67fd34e096876db97bab716e95"
+  integrity sha512-o8aEIFjQ4FugS5w5XK1c6hmiX6bqx7u+UuikARJPMhqOek7aovcXXdYj2zbVmX2/4c94aXerSokB0vD59Pj3GQ==
   dependencies:
     "@opentelemetry/api" "^1.9.0"
     "@opentelemetry/context-async-hooks" "^1.25.0"
