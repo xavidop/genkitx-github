@@ -826,7 +826,13 @@ export function githubModel(
         response = await client.path("/chat/completions").post(body);
       }
       return {
-        message: 'choices' in response.body ? fromGithubChoice(response.body.choices[0], request.output?.format === "json").message : { role: "model", content: [] },
+        message:
+          "choices" in response.body
+            ? fromGithubChoice(
+                response.body.choices[0],
+                request.output?.format === "json",
+              ).message
+            : { role: "model", content: [] },
         usage: {
           inputTokens:
             "usage" in response.body ? response.body.usage?.prompt_tokens : 0,
