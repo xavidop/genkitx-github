@@ -27,7 +27,7 @@ import {
 } from "genkit";
 
 import {
-  CandidateData,
+  ModelResponseData,
   ModelAction,
   modelRef,
   ToolDefinition,
@@ -662,7 +662,7 @@ export function toGithubMessages(
 
 const finishReasonMap: Record<
   NonNullable<string>,
-  CandidateData["finishReason"]
+  ModelResponseData["finishReason"]
 > = {
   length: "length",
   stop: "stop",
@@ -689,10 +689,9 @@ function fromGithubToolCall(toolCall: ChatCompletionsToolCall) {
 function fromGithubChoice(
   choice: ChatChoiceOutput,
   jsonMode = false,
-): CandidateData {
+): ModelResponseData {
   const toolRequestParts = choice.message.tool_calls?.map(fromGithubToolCall);
   return {
-    index: choice.index,
     finishReason:
       "finish_reason" in choice
         ? finishReasonMap[choice.finish_reason!]
@@ -712,9 +711,8 @@ function fromGithubChoice(
   };
 }
 
-function fromGithubChunkChoice(choice: any): CandidateData {
+function fromGithubChunkChoice(choice: any): ModelResponseData {
   return {
-    index: choice.index,
     finishReason: choice.content
       ? finishReasonMap[choice.finishReason] || "other"
       : "unknown",
@@ -723,7 +721,7 @@ function fromGithubChunkChoice(choice: any): CandidateData {
       content: [{ text: choice.delta?.content ?? "" }],
     },
     custom: {},
-  } as CandidateData;
+  };
 }
 
 export function toGithubRequestBody(
@@ -820,8 +818,8 @@ export function githubModel(
           for (const choice of JSON.parse(event.data).choices) {
             const c = fromGithubChunkChoice(choice);
             streamingCallback({
-              index: c.index,
-              content: c.message.content,
+              index: 0,
+              content: [{ ...c, custom: c.custom as Record<string, any> }],
             });
           }
         }
@@ -829,7 +827,7 @@ export function githubModel(
         response = await client.path("/chat/completions").post(body);
       }
       return {
-        candidates:
+        messages:
           "choices" in response.body
             ? response.body.choices.map((c) =>
                 fromGithubChoice(c, request.output?.format === "json"),
