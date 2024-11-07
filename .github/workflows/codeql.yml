@@ -19,7 +19,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        cache: yarn
+        cache: npm
         node-version: lts/*
     - uses: github/codeql-action/init@v3
     - uses: github/codeql-action/autobuild@v3

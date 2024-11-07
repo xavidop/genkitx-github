@@ -18,12 +18,10 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
+        cache: 'npm'
     - name: install
-      uses: borales/actions-yarn@v5
-      with:
-        cmd: install --frozen-lockfile
-    - run: yarn build
+      run: npm install --frozen-lockfile
+    - run: npm run build
     - name: SonarCloud Scan
       if: env.SONAR_TOKEN != null
       uses: SonarSource/sonarcloud-github-action@v3
