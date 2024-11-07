@@ -818,7 +818,6 @@ export function githubModel(
           for (const choice of JSON.parse(event.data).choices) {
             const c = fromGithubChunkChoice(choice);
             streamingCallback({
-              index: 0,
               content: [{ ...c, custom: c.custom as Record<string, any> }],
             });
           }
