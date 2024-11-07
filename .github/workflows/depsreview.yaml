@@ -11,4 +11,4 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/dependency-review-action@v4
         with:
-          allow-licenses: BSD-2-Clause, MIT, Apache-2.0, MPL-2.0, ISC, LGPL-3.0, 0BSD, BSD-3-Clause, BSD-3-Clause AND BSD-3-Clause-Clear
+          allow-licenses: BSD-2-Clause, MIT, Apache-2.0, MPL-2.0, ISC, LGPL-3.0, 0BSD, BSD-3-Clause, BSD-3-Clause-Clear
