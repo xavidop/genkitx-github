@@ -15,20 +15,23 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-import { Message } from "@genkit-ai/ai";
 import {
-  CandidateData,
-  defineModel,
+  Message,
   GenerateRequest,
   GenerationCommonConfigSchema,
   MessageData,
-  ModelAction,
-  modelRef,
   Part,
   Role,
-  ToolDefinition,
   ToolRequestPart,
-} from "@genkit-ai/ai/model";
+  Genkit,
+} from "genkit";
+
+import {
+  CandidateData,
+  ModelAction,
+  modelRef,
+  ToolDefinition,
+} from "genkit/model";
 
 import {
   ChatChoiceOutput,
@@ -594,7 +597,7 @@ export function toGithubMessages(
         } else {
           githubMsgs.push({
             role: role,
-            content: msg.text(),
+            content: msg.text,
           });
         }
         break;
@@ -602,7 +605,7 @@ export function toGithubMessages(
       case "system":
         githubMsgs.push({
           role: role,
-          content: msg.text(),
+          content: msg.text,
         });
         break;
       case "assistant": {
@@ -631,7 +634,7 @@ export function toGithubMessages(
         } else {
           githubMsgs.push({
             role: role,
-            content: msg.text(),
+            content: msg.text,
           });
         }
         break;
@@ -788,12 +791,13 @@ export function toGithubRequestBody(
 export function githubModel(
   name: string,
   client: ModelClient,
+  ai: Genkit,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
   const modelId = `github/${name}`;
   const model = SUPPORTED_GITHUB_MODELS[name];
   if (!model) throw new Error(`Unsupported model: ${name}`);
 
-  return defineModel(
+  return ai.defineModel(
     {
       name: modelId,
       ...model.info,
