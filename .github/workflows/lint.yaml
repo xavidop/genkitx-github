@@ -21,13 +21,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          cache: yarn
+          cache: npm
           node-version: lts/*
       - name: install
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: install --frozen-lockfile
+        run: npm install --frozen-lockfile
       - name: lint
-        uses: borales/actions-yarn@v5
-        with:
-          cmd: lint
+        run: npm run lint
