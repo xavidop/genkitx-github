@@ -41,33 +41,35 @@ if you are using Genkit version `<v0.9.0` or lower, please use the plugin versio
 
 ### Configuration
 
-To use the plugin, you need to configure it with your GitHub Token key. You can do this by calling the `configureGenkit` function:
+To use the plugin, you need to configure it with your GitHub Token key. You can do this by calling the `genkit` function:
 
 ```typescript
+import { genkit, z } from 'genkit';
 import {github, openAIGpt4o} from "genkitx-github";
 
-configureGenkit({
+const ai = genkit({
   plugins: [
     github({
       githubToken: '<my-github-token>',
     }),
-  ],
-  logLevel: "debug",
-  enableTracingAndMetrics: true,
+    model: openAIGpt4o,
+  ]
 });
 ```
 
 You can also intialize the plugin in this way if you have set the `GITHUB_TOKEN` environment variable:
 
 ```typescript
+import { genkit, z } from 'genkit';
 import {github, openAIGpt4o} from "genkitx-github";
 
-configureGenkit({
+const ai = genkit({
   plugins: [
-    github({}),
-  ],
-  logLevel: "debug",
-  enableTracingAndMetrics: true,
+    github({
+      githubToken: '<my-github-token>',
+    }),
+    model: openAIGpt4o,
+  ]
 });
 ```
 
@@ -76,15 +78,15 @@ configureGenkit({
 The simplest way to call the text generation model is by using the helper function `generate`:
 
 ```typescript
+import { genkit, z } from 'genkit';
 import {github, openAIGpt4o} from "genkitx-github";
 
 // Basic usage of an LLM
-const response = await generate({
-  model: openAIGpt4o, // model imported from genkitx-github
+const response = await ai.generate({
   prompt: 'Tell me a joke.',
 });
 
-console.log(await response.text());
+console.log(await response.text);
 ```
 
 ### Within a flow
@@ -92,19 +94,18 @@ console.log(await response.text());
 ```typescript
 // ...configure Genkit (as shown above)...
 
-export const myFlow = defineFlow(
+export const myFlow = ai.defineFlow(
   {
     name: 'menuSuggestionFlow',
     inputSchema: z.string(),
     outputSchema: z.string(),
   },
   async (subject) => {
-    const llmResponse = await generate({
+    const llmResponse = await ai.generate({
       prompt: `Suggest an item for the menu of a ${subject} themed restaurant`,
-      model: openAIGpt4o,
     });
 
-    return llmResponse.text();
+    return llmResponse.text;
   }
 );
 ```
@@ -115,7 +116,7 @@ export const myFlow = defineFlow(
 // ...configure Genkit (as shown above)...
 
 const specialToolInputSchema = z.object({ meal: z.enum(["breakfast", "lunch", "dinner"]) });
-const specialTool = defineTool(
+const specialTool = ai.defineTool(
   {
     name: "specialTool",
     description: "Retrieves today's special for the given meal",
@@ -129,13 +130,12 @@ const specialTool = defineTool(
   }
 );
 
-const result = generate({
-  model: openAIGpt4o,
+const result = ai.generate({
   tools: [specialTool],
   prompt: "What's for breakfast?",
 });
 
-console.log(result.then((res) => res.text()));
+console.log(result.then((res) => res.text));
 ```
 
 For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://firebase.google.com/docs/genkit/get-started).
