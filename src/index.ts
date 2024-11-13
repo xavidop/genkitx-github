@@ -1,4 +1,5 @@
-import { genkitPlugin, Plugin } from "@genkit-ai/core";
+import { Genkit } from "genkit";
+import { genkitPlugin } from "genkit/plugin";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
 import {
@@ -87,9 +88,8 @@ export interface PluginOptions {
   endpoint?: string;
 }
 
-export const github: Plugin<[PluginOptions]> = genkitPlugin(
-  "github",
-  async (options: PluginOptions) => {
+export function github(options?: PluginOptions) {
+  return genkitPlugin("github", async (ai: Genkit) => {
     const token = options?.githubToken || process.env.GITHUB_TOKEN;
     let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
     if (!token) {
@@ -103,17 +103,14 @@ export const github: Plugin<[PluginOptions]> = genkitPlugin(
 
     const client = ModelClient(endpoint, new AzureKeyCredential(token));
 
-    return {
-      models: [
-        ...Object.keys(SUPPORTED_GITHUB_MODELS).map((name) =>
-          githubModel(name, client),
-        ),
-      ],
-      embedders: Object.keys(SUPPORTED_EMBEDDING_MODELS).map((name) =>
-        githubEmbedder(name, options),
-      ),
-    };
-  },
-);
+    Object.keys(SUPPORTED_GITHUB_MODELS).forEach((name) => {
+      githubModel(name, client, ai);
+    });
+
+    Object.keys(SUPPORTED_EMBEDDING_MODELS).forEach((name) =>
+      githubEmbedder(name, ai, options),
+    );
+  });
+}
 
 export default github;
