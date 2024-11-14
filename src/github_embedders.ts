@@ -15,7 +15,7 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-import { defineEmbedder, embedderRef } from "@genkit-ai/ai/embedder";
+import { embedderRef, Genkit } from "genkit";
 import ModelClient, {
   GetEmbeddings200Response,
   GetEmbeddingsParameters,
@@ -90,7 +90,11 @@ export const SUPPORTED_EMBEDDING_MODELS: Record<string, any> = {
   "cohere-embed-v3-multilingual": cohereEmbedv3Multilingual,
 };
 
-export function githubEmbedder(name: string, options?: PluginOptions) {
+export function githubEmbedder(
+  name: string,
+  ai: Genkit,
+  options?: PluginOptions,
+) {
   const token = options?.githubToken || process.env.GITHUB_TOKEN;
   let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
   if (!token) {
@@ -105,7 +109,7 @@ export function githubEmbedder(name: string, options?: PluginOptions) {
   const client = ModelClient(endpoint, new AzureKeyCredential(token));
   const model = SUPPORTED_EMBEDDING_MODELS[name];
 
-  return defineEmbedder(
+  return ai.defineEmbedder(
     {
       info: model.info!,
       configSchema: TextEmbeddingConfigSchema,
@@ -115,7 +119,7 @@ export function githubEmbedder(name: string, options?: PluginOptions) {
       const body = {
         body: {
           model: name,
-          input: input.map((d) => d.text()),
+          input: input.map((d) => d.text),
           dimensions: options?.dimensions,
           encoding_format: options?.encodingFormat,
         },
