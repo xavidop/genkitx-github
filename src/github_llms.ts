@@ -15,20 +15,23 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-import { Message } from "@genkit-ai/ai";
 import {
-  CandidateData,
-  defineModel,
+  Message,
   GenerateRequest,
   GenerationCommonConfigSchema,
   MessageData,
-  ModelAction,
-  modelRef,
   Part,
   Role,
-  ToolDefinition,
   ToolRequestPart,
-} from "@genkit-ai/ai/model";
+  Genkit,
+} from "genkit";
+
+import {
+  ModelResponseData,
+  ModelAction,
+  modelRef,
+  ToolDefinition,
+} from "genkit/model";
 
 import {
   ChatChoiceOutput,
@@ -594,7 +597,7 @@ export function toGithubMessages(
         } else {
           githubMsgs.push({
             role: role,
-            content: msg.text(),
+            content: msg.text,
           });
         }
         break;
@@ -602,7 +605,7 @@ export function toGithubMessages(
       case "system":
         githubMsgs.push({
           role: role,
-          content: msg.text(),
+          content: msg.text,
         });
         break;
       case "assistant": {
@@ -631,7 +634,7 @@ export function toGithubMessages(
         } else {
           githubMsgs.push({
             role: role,
-            content: msg.text(),
+            content: msg.text,
           });
         }
         break;
@@ -659,7 +662,7 @@ export function toGithubMessages(
 
 const finishReasonMap: Record<
   NonNullable<string>,
-  CandidateData["finishReason"]
+  ModelResponseData["finishReason"]
 > = {
   length: "length",
   stop: "stop",
@@ -686,10 +689,9 @@ function fromGithubToolCall(toolCall: ChatCompletionsToolCall) {
 function fromGithubChoice(
   choice: ChatChoiceOutput,
   jsonMode = false,
-): CandidateData {
+): ModelResponseData {
   const toolRequestParts = choice.message.tool_calls?.map(fromGithubToolCall);
   return {
-    index: choice.index,
     finishReason:
       "finish_reason" in choice
         ? finishReasonMap[choice.finish_reason!]
@@ -709,9 +711,8 @@ function fromGithubChoice(
   };
 }
 
-function fromGithubChunkChoice(choice: any): CandidateData {
+function fromGithubChunkChoice(choice: any): ModelResponseData {
   return {
-    index: choice.index,
     finishReason: choice.content
       ? finishReasonMap[choice.finishReason] || "other"
       : "unknown",
@@ -720,7 +721,7 @@ function fromGithubChunkChoice(choice: any): CandidateData {
       content: [{ text: choice.delta?.content ?? "" }],
     },
     custom: {},
-  } as CandidateData;
+  };
 }
 
 export function toGithubRequestBody(
@@ -730,13 +731,19 @@ export function toGithubRequestBody(
   const model = SUPPORTED_GITHUB_MODELS[modelName];
   if (!model) throw new Error(`Unsupported model: ${modelName}`);
   const githubMessages = toGithubMessages(request.messages);
+  const jsonMode =
+    request.output?.format === "json" ||
+    request.output?.contentType === "application/json";
+
+  const textMode =
+    request.output?.format === "text" ||
+    request.output?.contentType === "plain/text";
 
   let responseFormat;
-  const response_format = request.output?.format;
-  if (
-    response_format === "json" &&
-    model.info.supports?.output?.includes("json")
-  ) {
+  const response_format = request.output?.format
+    ? request.output?.format
+    : request.output?.contentType;
+  if (jsonMode && model.info.supports?.output?.includes("json")) {
     responseFormat = {
       type: "json_object",
     };
@@ -745,8 +752,7 @@ export function toGithubRequestBody(
       content: "Write it in JSON",
     } as ChatRequestSystemMessage);
   } else if (
-    (response_format === "text" &&
-      model.info.supports?.output?.includes("text")) ||
+    (textMode && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
   ) {
     responseFormat = {
@@ -788,12 +794,13 @@ export function toGithubRequestBody(
 export function githubModel(
   name: string,
   client: ModelClient,
+  ai: Genkit,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
   const modelId = `github/${name}`;
   const model = SUPPORTED_GITHUB_MODELS[name];
   if (!model) throw new Error(`Unsupported model: ${name}`);
 
-  return defineModel(
+  return ai.defineModel(
     {
       name: modelId,
       ...model.info,
@@ -816,8 +823,7 @@ export function githubModel(
           for (const choice of JSON.parse(event.data).choices) {
             const c = fromGithubChunkChoice(choice);
             streamingCallback({
-              index: c.index,
-              content: c.message.content,
+              content: [{ ...c, custom: c.custom as Record<string, any> }],
             });
           }
         }
@@ -825,12 +831,13 @@ export function githubModel(
         response = await client.path("/chat/completions").post(body);
       }
       return {
-        candidates:
+        message:
           "choices" in response.body
-            ? response.body.choices.map((c) =>
-                fromGithubChoice(c, request.output?.format === "json"),
-              )
-            : [],
+            ? fromGithubChoice(
+                response.body.choices[0],
+                request.output?.format === "json",
+              ).message
+            : { role: "model", content: [] },
         usage: {
           inputTokens:
             "usage" in response.body ? response.body.usage?.prompt_tokens : 0,
