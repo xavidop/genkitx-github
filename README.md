@@ -35,7 +35,7 @@ Install the plugin in your project with your favorite package manager:
 
 ### Versions
 
-if you are using Genkit version `<v0.9.0` or lower, please use the plugin version `v1.9.0`. If you are using Genkit `>=v0.9.0`, please use the plugin version `v2.0.0`.
+if you are using Genkit version `<v0.9.0`, please use the plugin version `v1.9.0`. If you are using Genkit `>=v0.9.0`, please use the plugin version `v1.10.0`.
 
 ## Usage
 
