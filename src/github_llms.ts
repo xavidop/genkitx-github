@@ -731,19 +731,10 @@ export function toGithubRequestBody(
   const model = SUPPORTED_GITHUB_MODELS[modelName];
   if (!model) throw new Error(`Unsupported model: ${modelName}`);
   const githubMessages = toGithubMessages(request.messages);
-  const jsonMode =
-    request.output?.format === "json" ||
-    request.output?.contentType === "application/json";
-
-  const textMode =
-    request.output?.format === "text" ||
-    request.output?.contentType === "plain/text";
 
   let responseFormat;
-  const response_format = request.output?.format
-    ? request.output?.format
-    : request.output?.contentType;
-  if (jsonMode && model.info.supports?.output?.includes("json")) {
+  const response_format = request.output?.format;
+  if (response_format === "json" && model.info.supports?.output?.includes("json")) {
     responseFormat = {
       type: "json_object",
     };
@@ -752,7 +743,7 @@ export function toGithubRequestBody(
       content: "Write it in JSON",
     } as ChatRequestSystemMessage);
   } else if (
-    (textMode && model.info.supports?.output?.includes("text")) ||
+    (response_format === "text" && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
   ) {
     responseFormat = {
