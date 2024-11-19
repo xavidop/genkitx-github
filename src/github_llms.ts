@@ -36,7 +36,6 @@ import {
 import {
   ChatChoiceOutput,
   ChatRequestMessage,
-  ChatRequestSystemMessage,
   ModelClient,
   GetChatCompletionsDefaultResponse,
   GetChatCompletions200Response,
