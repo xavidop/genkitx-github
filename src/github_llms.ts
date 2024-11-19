@@ -36,7 +36,6 @@ import {
 import {
   ChatChoiceOutput,
   ChatRequestMessage,
-  ChatRequestSystemMessage,
   ModelClient,
   GetChatCompletionsDefaultResponse,
   GetChatCompletions200Response,
@@ -731,6 +730,7 @@ export function toGithubRequestBody(
   const model = SUPPORTED_GITHUB_MODELS[modelName];
   if (!model) throw new Error(`Unsupported model: ${modelName}`);
   const githubMessages = toGithubMessages(request.messages);
+
   const jsonMode =
     request.output?.format === "json" ||
     request.output?.contentType === "application/json";
@@ -747,10 +747,6 @@ export function toGithubRequestBody(
     responseFormat = {
       type: "json_object",
     };
-    githubMessages.push({
-      role: "system",
-      content: "Write it in JSON",
-    } as ChatRequestSystemMessage);
   } else if (
     (textMode && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
