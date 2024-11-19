@@ -748,10 +748,6 @@ export function toGithubRequestBody(
     responseFormat = {
       type: "json_object",
     };
-    githubMessages.push({
-      role: "system",
-      content: "Write it in JSON",
-    } as ChatRequestSystemMessage);
   } else if (
     (textMode && model.info.supports?.output?.includes("text")) ||
     model.info.supports?.output?.includes("text")
