@@ -111,6 +111,22 @@ export const openAIO1Mini = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const openAIO1 = modelRef({
+  name: "github/o1",
+  info: {
+    versions: ["o1"],
+    label: "OpenAI - o1",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: false,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const metaLlama370bInstruct = modelRef({
   name: "github/meta-llama-3-70b-instruct",
   info: {
@@ -212,6 +228,23 @@ export const metaLlama3290bVisionInstruct = modelRef({
   info: {
     versions: ["Llama-3.2-90B-Vision-Instruct"],
     label: "Meta - Llama-3.2-90b-vision-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+
+export const metaLlama3370bInstruct = modelRef({
+  name: "github/meta-llama-3.3-70b-instruct",
+  info: {
+    versions: ["Llama-3.3-70B-Instruct"],
+    label: "Meta - Llama-3.3-70B-Instruct",
     supports: {
       multiturn: true,
       tools: true,
@@ -335,11 +368,44 @@ export const mistralLarge2407 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const mistralLarge2411 = modelRef({
+  name: "github/mistral-large-2411",
+  info: {
+    versions: ["Mistral-large-2411"],
+    label: "Mistral - Large-2411",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+
 export const mistralNemo = modelRef({
   name: "github/mistral-nemo",
   info: {
     versions: ["Mistral-nemo"],
     label: "Mistral - Nemo",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const ministral3B = modelRef({
+  name: "github/ministral-3b",
+  info: {
+    versions: ["Ministral-3B"],
+    label: "Ministral - 3B",
     supports: {
       multiturn: true,
       tools: true,
@@ -463,6 +529,22 @@ export const microsoftPhi3Medium4kInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const microsoftPhi3Medium128kInstruct = modelRef({
+  name: "github/phi-3-medium-128k-instruct",
+  info: {
+    versions: ["Phi-3-medium-128k-instruct"],
+    label: "Microsoft - Phi-3-medium-128k-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const microsoftPhi35Mini128kInstruct = modelRef({
   name: "github/phi-3.5-mini-instruct",
   info: {
@@ -495,11 +577,44 @@ export const microsoftPhi35MoE128kInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const microsoftPhi35Vision128kInstruct = modelRef({
+  name: "github/phi-3.5-vision-instruct",
+  info: {
+    versions: ["Phi-3.5-vision-instruct"],
+    label: "Microsoft - Phi-3.5-vision-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const jais30bChat = modelRef({
+  name: "github/jais-30b-chat",
+  info: {
+    versions: ["jais-30b-chat"],
+    label: "Jais - 30b-chat",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "gpt-4o": openAIGpt4o,
   "gpt-4o-mini": openAIGpt4oMini,
   "o1-preview": openAIO1Preview,
   "o1-mini": openAIO1Mini,
+  "o1": openAIO1,
   "meta-llama-3-70b-instruct": metaLlama370bInstruct,
   "meta-llama-3-8b-instruct": metaLlama38bInstruct,
   "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
@@ -507,6 +622,7 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "meta-llama-3.1-8b-instruct": metaLlama318bInstruct,
   "Llama-3.2-11B-Vision-Instruct": metaLlama3211bVisionInstruct,
   "Llama-3.2-90B-Vision-Instruct": metaLlama3290bVisionInstruct,
+  "Llama-3.3-70B-Instruct": metaLlama3370bInstruct,
   "cohere-command-r": cohereCommandR,
   "cohere-command-r-plus": cohereCommandRPlus,
   "cohere-command-r-08-2024": cohereCommandR082024,
@@ -514,7 +630,9 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Mistral-small": mistralSmall,
   "Mistral-large": mistralLarge,
   "Mistral-large-2407": mistralLarge2407,
+  "Mistral-large-2411": mistralLarge2411,
   "Mistral-nemo": mistralNemo,
+  "Ministral-3B": ministral3B,
   "ai21-jamba-1.5-mini": ai21Jamba15Mini,
   "ai21-jamba-1.5-large": ai21Jamba15Large,
   "Phi-3-mini-4k-instruct": microsoftPhi3Mini4kInstruct,
@@ -522,8 +640,11 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Phi-3-small-8k-instruct": microsoftPhi3Small8kInstruct,
   "Phi-3-small-128k-instruct": microsoftPhi3Small128kInstruct,
   "Phi-3-medium-4k-instruct": microsoftPhi3Medium4kInstruct,
+  "Phi-3-medium-128k-instruct": microsoftPhi3Medium128kInstruct,
   "Phi-3.5-mini-instruct": microsoftPhi35Mini128kInstruct,
   "Phi-3.5-moe-instruct": microsoftPhi35MoE128kInstruct,
+  "Phi-3.5-vision-instruct": microsoftPhi35Vision128kInstruct,
+  "jais-30b-chat": jais30bChat,
 };
 
 function toGithubRole(role: Role): string {

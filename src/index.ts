@@ -2,30 +2,32 @@ import { Genkit } from "genkit";
 import { genkitPlugin } from "genkit/plugin";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
-import {
-  microsoftPhi35MoE128kInstruct,
-  cohereCommandR082024,
-  cohereCommandRPlus082024,
-  metaLlama3211bVisionInstruct,
-  metaLlama3290bVisionInstruct,
-} from "./github_llms";
+
 import {
   githubModel,
   openAIGpt4o,
   openAIGpt4oMini,
   openAIO1Preview,
   openAIO1Mini,
+  openAIO1,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
   metaLlama3170bInstruct,
   metaLlama318bInstruct,
+  metaLlama3211bVisionInstruct,
+  metaLlama3290bVisionInstruct,
+  metaLlama3370bInstruct,
   cohereCommandR,
   cohereCommandRPlus,
+  cohereCommandR082024,
+  cohereCommandRPlus082024,
   mistralSmall,
   mistralLarge,
   mistralLarge2407,
+  mistralLarge2411,
   mistralNemo,
+  ministral3B,
   ai21Jamba15Mini,
   ai21Jamba15Large,
   microsoftPhi3Mini4kInstruct,
@@ -33,7 +35,11 @@ import {
   microsoftPhi3Small8kInstruct,
   microsoftPhi3Small128kInstruct,
   microsoftPhi3Medium4kInstruct,
+  microsoftPhi3Medium128kInstruct,
   microsoftPhi35Mini128kInstruct,
+  microsoftPhi35MoE128kInstruct,
+  microsoftPhi35Vision128kInstruct,
+  jais30bChat,
   SUPPORTED_GITHUB_MODELS,
 } from "./github_llms.js";
 import {
@@ -50,6 +56,7 @@ export {
   openAIGpt4oMini,
   openAIO1Preview,
   openAIO1Mini,
+  openAIO1,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
@@ -57,6 +64,7 @@ export {
   metaLlama318bInstruct,
   metaLlama3211bVisionInstruct,
   metaLlama3290bVisionInstruct,
+  metaLlama3370bInstruct,
   cohereCommandRPlus,
   cohereCommandR,
   cohereCommandR082024,
@@ -64,7 +72,9 @@ export {
   mistralSmall,
   mistralLarge,
   mistralLarge2407,
+  mistralLarge2411,
   mistralNemo,
+  ministral3B,
   ai21Jamba15Mini,
   ai21Jamba15Large,
   microsoftPhi3Mini4kInstruct,
@@ -72,8 +82,11 @@ export {
   microsoftPhi3Small8kInstruct,
   microsoftPhi3Small128kInstruct,
   microsoftPhi3Medium4kInstruct,
+  microsoftPhi3Medium128kInstruct,
   microsoftPhi35Mini128kInstruct,
   microsoftPhi35MoE128kInstruct,
+  microsoftPhi35Vision128kInstruct,
+  jais30bChat,
 };
 
 export {
