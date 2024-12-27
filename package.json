@@ -47,7 +47,7 @@
       "require": "./lib/cjs/index.js",
       "default": "./lib/cjs/index.js",
       "import": "./lib/esm/index.mjs",
-      "types": "./lib/cjs/index.d.ts"
+      "types": "./lib/types/index.d.ts"
     }
   },
   "files": [
