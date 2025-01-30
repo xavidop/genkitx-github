@@ -384,6 +384,21 @@ export const mistralLarge2411 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const mistralCodestral2501 = modelRef({
+  name: "github/codestral-2501",
+  info: {
+    versions: ["Codestral-2501"],
+    label: "Mistral - Codestral-2501",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
 
 export const mistralNemo = modelRef({
   name: "github/mistral-nemo",
@@ -593,11 +608,43 @@ export const microsoftPhi35Vision128kInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const microsoftPhi4 = modelRef({
+  name: "github/phi-4",
+  info: {
+    versions: ["Phi-4"],
+    label: "Microsoft - Phi-4",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const jais30bChat = modelRef({
   name: "github/jais-30b-chat",
   info: {
     versions: ["jais-30b-chat"],
     label: "Jais - 30b-chat",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const deepseekR1 = modelRef({
+  name: "github/deepseek-r1",
+  info: {
+    versions: ["DeepSeek-R1"],
+    label: "DeepSeek - R1",
     supports: {
       multiturn: true,
       tools: true,
@@ -633,6 +680,7 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Mistral-large-2411": mistralLarge2411,
   "Mistral-nemo": mistralNemo,
   "Ministral-3B": ministral3B,
+  "Codestral-2501": mistralCodestral2501,
   "ai21-jamba-1.5-mini": ai21Jamba15Mini,
   "ai21-jamba-1.5-large": ai21Jamba15Large,
   "Phi-3-mini-4k-instruct": microsoftPhi3Mini4kInstruct,
@@ -644,7 +692,9 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Phi-3.5-mini-instruct": microsoftPhi35Mini128kInstruct,
   "Phi-3.5-moe-instruct": microsoftPhi35MoE128kInstruct,
   "Phi-3.5-vision-instruct": microsoftPhi35Vision128kInstruct,
+  "Phi-4": microsoftPhi4,
   "jais-30b-chat": jais30bChat,
+  "Deepseek-r1": deepseekR1,
 };
 
 function toGithubRole(role: Role): string {

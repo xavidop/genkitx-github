@@ -27,6 +27,7 @@ import {
   mistralLarge2407,
   mistralLarge2411,
   mistralNemo,
+  mistralCodestral2501,
   ministral3B,
   ai21Jamba15Mini,
   ai21Jamba15Large,
@@ -39,7 +40,9 @@ import {
   microsoftPhi35Mini128kInstruct,
   microsoftPhi35MoE128kInstruct,
   microsoftPhi35Vision128kInstruct,
+  microsoftPhi4,
   jais30bChat,
+  deepseekR1,
   SUPPORTED_GITHUB_MODELS,
 } from "./github_llms.js";
 import {
@@ -73,6 +76,7 @@ export {
   mistralLarge,
   mistralLarge2407,
   mistralLarge2411,
+  mistralCodestral2501,
   mistralNemo,
   ministral3B,
   ai21Jamba15Mini,
@@ -86,7 +90,9 @@ export {
   microsoftPhi35Mini128kInstruct,
   microsoftPhi35MoE128kInstruct,
   microsoftPhi35Vision128kInstruct,
+  microsoftPhi4,
   jais30bChat,
+  deepseekR1,
 };
 
 export {
