@@ -127,6 +127,22 @@ export const openAIO1 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const openAIO3Mini = modelRef({
+  name: "github/o3-mini",
+  info: {
+    versions: ["o3-mini"],
+    label: "OpenAI - o3-mini",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: false,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const metaLlama370bInstruct = modelRef({
   name: "github/meta-llama-3-70b-instruct",
   info: {
@@ -662,6 +678,7 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "o1-preview": openAIO1Preview,
   "o1-mini": openAIO1Mini,
   "o1": openAIO1,
+  "o3-mini": openAIO3Mini,
   "meta-llama-3-70b-instruct": metaLlama370bInstruct,
   "meta-llama-3-8b-instruct": metaLlama38bInstruct,
   "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
