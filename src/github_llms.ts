@@ -224,7 +224,7 @@ export const metaLlama318bInstruct = modelRef({
 });
 
 export const metaLlama3211bVisionInstruct = modelRef({
-  name: "github/meta-llama-3.2-11b-vision-instruct",
+  name: "github/Llama-3.2-11B-Vision-Instruct",
   info: {
     versions: ["Llama-3.2-11B-Vision-Instruct"],
     label: "Meta - Llama-3.2-11b-vision-instruct",
@@ -240,7 +240,7 @@ export const metaLlama3211bVisionInstruct = modelRef({
 });
 
 export const metaLlama3290bVisionInstruct = modelRef({
-  name: "github/meta-llama-3.2-90b-vision-instruct",
+  name: "github/Llama-3.2-90B-Vision-Instruct",
   info: {
     versions: ["Llama-3.2-90B-Vision-Instruct"],
     label: "Meta - Llama-3.2-90b-vision-instruct",
@@ -257,7 +257,7 @@ export const metaLlama3290bVisionInstruct = modelRef({
 
 
 export const metaLlama3370bInstruct = modelRef({
-  name: "github/meta-llama-3.3-70b-instruct",
+  name: "github/Llama-3.3-70B-Instruct",
   info: {
     versions: ["Llama-3.3-70B-Instruct"],
     label: "Meta - Llama-3.3-70B-Instruct",
@@ -289,7 +289,7 @@ export const cohereCommandR = modelRef({
 });
 
 export const cohereCommandR082024 = modelRef({
-  name: "github/cohere-command-r",
+  name: "github/Cohere-command-r-08-2024",
   info: {
     versions: ["Cohere-command-r-08-2024"],
     label: "Cohere - Command-r-08-2024",
@@ -321,7 +321,7 @@ export const cohereCommandRPlus = modelRef({
 });
 
 export const cohereCommandRPlus082024 = modelRef({
-  name: "github/cohere-command-r",
+  name: "github/Cohere-command-r-plus-08-2024",
   info: {
     versions: ["Cohere-command-r-plus-08-2024"],
     label: "Cohere - Command-r-plus-08-2024",
@@ -337,7 +337,7 @@ export const cohereCommandRPlus082024 = modelRef({
 });
 
 export const mistralSmall = modelRef({
-  name: "github/mistral-small",
+  name: "github/Mistral-small",
   info: {
     versions: ["Mistral-small"],
     label: "Mistral - Small",
@@ -353,7 +353,7 @@ export const mistralSmall = modelRef({
 });
 
 export const mistralLarge = modelRef({
-  name: "github/mistral-large",
+  name: "github/Mistral-large",
   info: {
     versions: ["Mistral-large"],
     label: "Mistral - Large",
@@ -369,7 +369,7 @@ export const mistralLarge = modelRef({
 });
 
 export const mistralLarge2407 = modelRef({
-  name: "github/mistral-large-2407",
+  name: "github/Mistral-large-2407",
   info: {
     versions: ["Mistral-large-2407"],
     label: "Mistral - Large-2407",
@@ -385,7 +385,7 @@ export const mistralLarge2407 = modelRef({
 });
 
 export const mistralLarge2411 = modelRef({
-  name: "github/mistral-large-2411",
+  name: "github/Mistral-large-24111",
   info: {
     versions: ["Mistral-large-2411"],
     label: "Mistral - Large-2411",
@@ -401,7 +401,7 @@ export const mistralLarge2411 = modelRef({
 });
 
 export const mistralCodestral2501 = modelRef({
-  name: "github/codestral-2501",
+  name: "github/Codestral-2501",
   info: {
     versions: ["Codestral-2501"],
     label: "Mistral - Codestral-2501",
@@ -417,7 +417,7 @@ export const mistralCodestral2501 = modelRef({
 });
 
 export const mistralNemo = modelRef({
-  name: "github/mistral-nemo",
+  name: "github/Mistral-nemo",
   info: {
     versions: ["Mistral-nemo"],
     label: "Mistral - Nemo",
@@ -433,7 +433,7 @@ export const mistralNemo = modelRef({
 });
 
 export const ministral3B = modelRef({
-  name: "github/ministral-3b",
+  name: "github/Ministral-3b",
   info: {
     versions: ["Ministral-3B"],
     label: "Ministral - 3B",
@@ -481,7 +481,7 @@ export const ai21Jamba15Large = modelRef({
 });
 
 export const microsoftPhi3Mini4kInstruct = modelRef({
-  name: "github/phi-3-mini-4k-instruct",
+  name: "github/Phi-3-mini-4k-instruct",
   info: {
     versions: ["Phi-3-mini-4k-instruct"],
     label: "Microsoft - Phi-3-mini-4k-instruct",
@@ -497,7 +497,7 @@ export const microsoftPhi3Mini4kInstruct = modelRef({
 });
 
 export const microsoftPhi3Mini128kInstruct = modelRef({
-  name: "github/phi-3-mini-128k-instruct",
+  name: "github/Phi-3-mini-128k-instruct",
   info: {
     versions: ["Phi-3-mini-128k-instruct"],
     label: "Microsoft - Phi-3-mini-128k-instruct",
@@ -513,7 +513,7 @@ export const microsoftPhi3Mini128kInstruct = modelRef({
 });
 
 export const microsoftPhi3Small8kInstruct = modelRef({
-  name: "github/phi-3-small-8k-instruct",
+  name: "github/Phi-3-small-8k-instruct",
   info: {
     versions: ["Phi-3-small-8k-instruct"],
     label: "Microsoft - Phi-3-small-8k-instruct",
@@ -529,7 +529,7 @@ export const microsoftPhi3Small8kInstruct = modelRef({
 });
 
 export const microsoftPhi3Small128kInstruct = modelRef({
-  name: "github/phi-3-small-128k-instruct",
+  name: "github/Phi-3-small-128k-instruct",
   info: {
     versions: ["Phi-3-small-128k-instruct"],
     label: "Microsoft - Phi-3-small-128k-instruct",
@@ -545,7 +545,7 @@ export const microsoftPhi3Small128kInstruct = modelRef({
 });
 
 export const microsoftPhi3Medium4kInstruct = modelRef({
-  name: "github/phi-3-medium-4k-instruct",
+  name: "github/Phi-3-medium-4k-instruct",
   info: {
     versions: ["Phi-3-medium-4k-instruct"],
     label: "Microsoft - Phi-3-medium-4k-instruct",
@@ -561,7 +561,7 @@ export const microsoftPhi3Medium4kInstruct = modelRef({
 });
 
 export const microsoftPhi3Medium128kInstruct = modelRef({
-  name: "github/phi-3-medium-128k-instruct",
+  name: "github/Phi-3-medium-128k-instruct",
   info: {
     versions: ["Phi-3-medium-128k-instruct"],
     label: "Microsoft - Phi-3-medium-128k-instruct",
@@ -577,7 +577,7 @@ export const microsoftPhi3Medium128kInstruct = modelRef({
 });
 
 export const microsoftPhi35Mini128kInstruct = modelRef({
-  name: "github/phi-3.5-mini-instruct",
+  name: "github/Phi-3.5-mini-instruct",
   info: {
     versions: ["Phi-3.5-mini-instruct"],
     label: "Microsoft - Phi-3.5-mini-128k-instruct",
@@ -593,7 +593,7 @@ export const microsoftPhi35Mini128kInstruct = modelRef({
 });
 
 export const microsoftPhi35MoE128kInstruct = modelRef({
-  name: "github/phi-3.5-moe-instruct",
+  name: "github/Phi-3.5-moe-instruct",
   info: {
     versions: ["Phi-3.5-moe-instruct"],
     label: "Microsoft - Phi-3.5-moe-128k-instruct",
@@ -609,7 +609,7 @@ export const microsoftPhi35MoE128kInstruct = modelRef({
 });
 
 export const microsoftPhi35Vision128kInstruct = modelRef({
-  name: "github/phi-3.5-vision-instruct",
+  name: "github/Phi-3.5-vision-instruct",
   info: {
     versions: ["Phi-3.5-vision-instruct"],
     label: "Microsoft - Phi-3.5-vision-instruct",
@@ -625,7 +625,7 @@ export const microsoftPhi35Vision128kInstruct = modelRef({
 });
 
 export const microsoftPhi4 = modelRef({
-  name: "github/phi-4",
+  name: "github/Phi-4",
   info: {
     versions: ["Phi-4"],
     label: "Microsoft - Phi-4",
@@ -657,7 +657,7 @@ export const jais30bChat = modelRef({
 });
 
 export const deepseekR1 = modelRef({
-  name: "github/deepseek-r1",
+  name: "github/DeepSeek-R1",
   info: {
     versions: ["DeepSeek-R1"],
     label: "DeepSeek - R1",
@@ -687,10 +687,10 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Llama-3.2-11B-Vision-Instruct": metaLlama3211bVisionInstruct,
   "Llama-3.2-90B-Vision-Instruct": metaLlama3290bVisionInstruct,
   "Llama-3.3-70B-Instruct": metaLlama3370bInstruct,
-  "cohere-command-r": cohereCommandR,
-  "cohere-command-r-plus": cohereCommandRPlus,
-  "cohere-command-r-08-2024": cohereCommandR082024,
-  "cohere-command-r-plus-08-2024": cohereCommandRPlus082024,
+  "Cohere-command-r": cohereCommandR,
+  "Cohere-command-r-plus": cohereCommandRPlus,
+  "Cohere-command-r-08-2024": cohereCommandR082024,
+  "Cohere-command-r-plus-08-2024": cohereCommandRPlus082024,
   "Mistral-small": mistralSmall,
   "Mistral-large": mistralLarge,
   "Mistral-large-2407": mistralLarge2407,
@@ -711,7 +711,7 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Phi-3.5-vision-instruct": microsoftPhi35Vision128kInstruct,
   "Phi-4": microsoftPhi4,
   "jais-30b-chat": jais30bChat,
-  "Deepseek-r1": deepseekR1,
+  "DeepSeek-R1": deepseekR1,
 };
 
 function toGithubRole(role: Role): string {

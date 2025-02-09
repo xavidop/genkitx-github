@@ -107,12 +107,14 @@ export {
 export interface PluginOptions {
   githubToken?: string;
   endpoint?: string;
+  apiVersion?: string;
 }
 
 export function github(options?: PluginOptions) {
   return genkitPlugin("github", async (ai: Genkit) => {
     const token = options?.githubToken || process.env.GITHUB_TOKEN;
     let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
+    const apiVersion = options?.apiVersion || "2024-12-01-preview";
     if (!token) {
       throw new Error(
         "Please pass in the TOKEN key or set the GITHUB_TOKEN environment variable",
@@ -122,7 +124,7 @@ export function github(options?: PluginOptions) {
       endpoint = "https://models.inference.ai.azure.com";
     }
 
-    const client = ModelClient(endpoint, new AzureKeyCredential(token));
+    const client = ModelClient(endpoint, new AzureKeyCredential(token), {apiVersion: apiVersion});
 
     Object.keys(SUPPORTED_GITHUB_MODELS).forEach((name) => {
       githubModel(name, client, ai);
