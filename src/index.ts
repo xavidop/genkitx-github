@@ -5,12 +5,17 @@ import { AzureKeyCredential } from "@azure/core-auth";
 
 import {
   githubModel,
+  openAIGpt41,
+  openAIGpt41Mini,
+  openAIGpt41Nano,
   openAIGpt4o,
   openAIGpt4oMini,
   openAIO1Preview,
   openAIO1Mini,
   openAIO1,
   openAIO3Mini,
+  openAIO3,
+  openAIO4Mini,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
@@ -19,6 +24,9 @@ import {
   metaLlama3211bVisionInstruct,
   metaLlama3290bVisionInstruct,
   metaLlama3370bInstruct,
+  metaLlama4Scout17bInstruct,
+  metaLlama4Maverick17bInstruct,
+  cohereCommandA,
   cohereCommandR,
   cohereCommandRPlus,
   cohereCommandR082024,
@@ -42,6 +50,9 @@ import {
   microsoftPhi35MoE128kInstruct,
   microsoftPhi35Vision128kInstruct,
   microsoftPhi4,
+  microsoftPhi4MultimodalInstruct,
+  microsoftPhi4MiniInstruct,
+  microsoftMaiDsR1,
   jais30bChat,
   deepseekR1,
   SUPPORTED_GITHUB_MODELS,
@@ -49,6 +60,7 @@ import {
 import {
   cohereEmbedv3English,
   cohereEmbedv3Multilingual,
+  cohereEmbedv4,
   githubEmbedder,
   openAITextEmbedding3Large,
   openAITextEmbedding3Small,
@@ -56,12 +68,17 @@ import {
 } from "./github_embedders.js";
 
 export {
+  openAIGpt41,
+  openAIGpt41Mini,
+  openAIGpt41Nano,
   openAIGpt4o,
   openAIGpt4oMini,
   openAIO1Preview,
   openAIO1Mini,
   openAIO1,
   openAIO3Mini,
+  openAIO3,
+  openAIO4Mini,
   metaLlama370bInstruct,
   metaLlama38bInstruct,
   metaLlama31405bInstruct,
@@ -70,6 +87,9 @@ export {
   metaLlama3211bVisionInstruct,
   metaLlama3290bVisionInstruct,
   metaLlama3370bInstruct,
+  metaLlama4Scout17bInstruct,
+  metaLlama4Maverick17bInstruct,
+  cohereCommandA,
   cohereCommandRPlus,
   cohereCommandR,
   cohereCommandR082024,
@@ -93,6 +113,9 @@ export {
   microsoftPhi35MoE128kInstruct,
   microsoftPhi35Vision128kInstruct,
   microsoftPhi4,
+  microsoftPhi4MultimodalInstruct,
+  microsoftPhi4MiniInstruct,
+  microsoftMaiDsR1,
   jais30bChat,
   deepseekR1,
 };
@@ -102,6 +125,7 @@ export {
   openAITextEmbedding3Large,
   cohereEmbedv3English,
   cohereEmbedv3Multilingual,
+  cohereEmbedv4,
 };
 
 export interface PluginOptions {
@@ -124,7 +148,9 @@ export function github(options?: PluginOptions) {
       endpoint = "https://models.inference.ai.azure.com";
     }
 
-    const client = ModelClient(endpoint, new AzureKeyCredential(token), {apiVersion: apiVersion});
+    const client = ModelClient(endpoint, new AzureKeyCredential(token), {
+      apiVersion: apiVersion,
+    });
 
     Object.keys(SUPPORTED_GITHUB_MODELS).forEach((name) => {
       githubModel(name, client, ai);

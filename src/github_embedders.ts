@@ -83,11 +83,24 @@ export const cohereEmbedv3Multilingual = embedderRef({
   },
 });
 
+export const cohereEmbedv4 = embedderRef({
+  name: "github/embed-v-4-0",
+  configSchema: TextEmbeddingConfigSchema,
+  info: {
+    dimensions: 1024,
+    label: "Cohere - Embed-embed-v4",
+    supports: {
+      input: ["text"],
+    },
+  },
+});
+
 export const SUPPORTED_EMBEDDING_MODELS: Record<string, any> = {
   "text-embedding-3-small": openAITextEmbedding3Small,
   "text-embedding-3-large": openAITextEmbedding3Large,
   "cohere-embed-v3-english": cohereEmbedv3English,
   "cohere-embed-v3-multilingual": cohereEmbedv3Multilingual,
+  "embed-v-4-0": cohereEmbedv4,
 };
 
 export function githubEmbedder(

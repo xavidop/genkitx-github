@@ -47,6 +47,54 @@ import {
 } from "@azure-rest/ai-inference";
 import { createSseStream } from "@azure/core-sse";
 
+export const openAIGpt41 = modelRef({
+  name: "github/gpt-4.1",
+  info: {
+    versions: ["gpt-4.1"],
+    label: "OpenAI - GPT-4.1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const openAIGpt41Mini = modelRef({
+  name: "github/gpt-4.1-mini",
+  info: {
+    versions: ["gpt-4.1-mini"],
+    label: "OpenAI - GPT-4.1 Mini",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const openAIGpt41Nano = modelRef({
+  name: "github/gpt-4.1-nano",
+  info: {
+    versions: ["gpt-4.1-nano"],
+    label: "OpenAI - GPT-4.1 Nano",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const openAIGpt4o = modelRef({
   name: "github/gpt-4o",
   info: {
@@ -127,11 +175,43 @@ export const openAIO1 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const openAIO3 = modelRef({
+  name: "github/o3",
+  info: {
+    versions: ["o3"],
+    label: "OpenAI - o3",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: false,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const openAIO3Mini = modelRef({
   name: "github/o3-mini",
   info: {
     versions: ["o3-mini"],
     label: "OpenAI - o3-mini",
+    supports: {
+      multiturn: true,
+      tools: false,
+      media: false,
+      systemRole: false,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const openAIO4Mini = modelRef({
+  name: "github/o4-mini",
+  info: {
+    versions: ["o4-mini"],
+    label: "OpenAI - o4-mini",
     supports: {
       multiturn: true,
       tools: false,
@@ -255,7 +335,6 @@ export const metaLlama3290bVisionInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
-
 export const metaLlama3370bInstruct = modelRef({
   name: "github/Llama-3.3-70B-Instruct",
   info: {
@@ -272,11 +351,59 @@ export const metaLlama3370bInstruct = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const metaLlama4Scout17bInstruct = modelRef({
+  name: "github/Llama-4-Scout-17B-16E-Instruct",
+  info: {
+    versions: ["Llama-4-Scout-17B-16E-Instructt"],
+    label: "Meta - Llama-4-Scout-17B-16E-Instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const metaLlama4Maverick17bInstruct = modelRef({
+  name: "github/Llama-4-Maverick-17B-128E-Instruct-FP8",
+  info: {
+    versions: ["Llama-4-Maverick-17B-128E-Instruct-FP8"],
+    label: "Meta - Llama-4-Maverick-17B-128E-Instruct-FP8",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: true,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const cohereCommandR = modelRef({
   name: "github/cohere-command-r",
   info: {
     versions: ["cohere-command-r"],
     label: "Cohere - Command-r",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const cohereCommandA = modelRef({
+  name: "github/cohere-command-a",
+  info: {
+    versions: ["cohere-command-a"],
+    label: "Cohere - Command-a",
     supports: {
       multiturn: true,
       tools: true,
@@ -640,6 +767,54 @@ export const microsoftPhi4 = modelRef({
   configSchema: GenerationCommonConfigSchema,
 });
 
+export const microsoftPhi4MultimodalInstruct = modelRef({
+  name: "github/Phi-4-multimodal-instruct",
+  info: {
+    versions: ["Phi-4-multimodal-instruct"],
+    label: "Microsoft - Phi-4-multimodal",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftPhi4MiniInstruct = modelRef({
+  name: "github/Phi-4-mini-instruct",
+  info: {
+    versions: ["Phi-4-mini-instruct"],
+    label: "Microsoft - Phi-4-mini-instruct",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
+export const microsoftMaiDsR1 = modelRef({
+  name: "github/MAI-DS-R1",
+  info: {
+    versions: ["MAI-DS-R1"],
+    label: "Microsoft - MAI-DS-R1",
+    supports: {
+      multiturn: true,
+      tools: true,
+      media: false,
+      systemRole: true,
+      output: ["text", "json"],
+    },
+  },
+  configSchema: GenerationCommonConfigSchema,
+});
+
 export const jais30bChat = modelRef({
   name: "github/jais-30b-chat",
   info: {
@@ -673,12 +848,17 @@ export const deepseekR1 = modelRef({
 });
 
 export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
+  "gpt-4.1": openAIGpt41,
+  "gpt-4.1-mini": openAIGpt41Mini,
+  "gpt-4.1-nano": openAIGpt41Nano,
   "gpt-4o": openAIGpt4o,
   "gpt-4o-mini": openAIGpt4oMini,
   "o1-preview": openAIO1Preview,
   "o1-mini": openAIO1Mini,
-  "o1": openAIO1,
+  o1: openAIO1,
+  o3: openAIO3,
   "o3-mini": openAIO3Mini,
+  "o4-mini": openAIO4Mini,
   "meta-llama-3-70b-instruct": metaLlama370bInstruct,
   "meta-llama-3-8b-instruct": metaLlama38bInstruct,
   "meta-llama-3.1-405b-instruct": metaLlama31405bInstruct,
@@ -687,6 +867,9 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Llama-3.2-11B-Vision-Instruct": metaLlama3211bVisionInstruct,
   "Llama-3.2-90B-Vision-Instruct": metaLlama3290bVisionInstruct,
   "Llama-3.3-70B-Instruct": metaLlama3370bInstruct,
+  "Llama-4-Scout-17B-16E-Instruct": metaLlama4Scout17bInstruct,
+  "Llama-4-Maverick-17B-128E-Instruct-FP8": metaLlama4Maverick17bInstruct,
+  "cohere-command-a": cohereCommandA,
   "Cohere-command-r": cohereCommandR,
   "Cohere-command-r-plus": cohereCommandRPlus,
   "Cohere-command-r-08-2024": cohereCommandR082024,
@@ -710,6 +893,9 @@ export const SUPPORTED_GITHUB_MODELS: Record<string, any> = {
   "Phi-3.5-moe-instruct": microsoftPhi35MoE128kInstruct,
   "Phi-3.5-vision-instruct": microsoftPhi35Vision128kInstruct,
   "Phi-4": microsoftPhi4,
+  "Phi-4-multimodal-instruct": microsoftPhi4MultimodalInstruct,
+  "Phi-4-mini-instruct": microsoftPhi4MiniInstruct,
+  "MAI-DS-R1": microsoftMaiDsR1,
   "jais-30b-chat": jais30bChat,
   "DeepSeek-R1": deepseekR1,
 };
