@@ -1202,7 +1202,7 @@ export function githubModel(
       }
       return {
         message:
-          "choices" in response.body
+          (typeof response.body === 'object' && response.body && "choices" in response.body)
             ? fromGithubChoice(
                 response.body.choices[0],
                 request.output?.format === "json",
@@ -1210,13 +1210,13 @@ export function githubModel(
             : { role: "model", content: [] },
         usage: {
           inputTokens:
-            "usage" in response.body ? response.body.usage?.prompt_tokens : 0,
+            (typeof response.body === 'object' && response.body && "usage" in response.body) ? response.body.usage?.prompt_tokens : 0,
           outputTokens:
-            "usage" in response.body
+            (typeof response.body === 'object' && response.body && "usage" in response.body)
               ? response.body.usage?.completion_tokens
               : 0,
           totalTokens:
-            "usage" in response.body ? response.body.usage?.total_tokens : 0,
+            (typeof response.body === 'object' && response.body && "usage" in response.body) ? response.body.usage?.total_tokens : 0,
         },
         custom: response,
       };
