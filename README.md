@@ -28,7 +28,7 @@ This Genkit plugin allows to use GitHub models through their official APIs.
 
 ## Installation
 
-Install the plugin in your project with your favorite package manager:
+Install this plugin in your project with your favorite package manager:
 
 - `npm install genkitx-github`
 - `pnpm add genkitx-github`
