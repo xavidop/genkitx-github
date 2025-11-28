@@ -17,14 +17,16 @@
 import { startFlowServer } from '@genkit-ai/express';
 import dotenv from 'dotenv';
 import { genkit, z } from 'genkit';
-import { openAIGpt4o, github } from 'genkitx-github';
+import { openAIGpt4o, openAITextEmbedding3Small, github } from 'genkitx-github';
 
 
 dotenv.config();
 
 const ai = genkit({
   plugins: [
-    github(),
+    github({
+      customModels: ['gpt-5'], // Register custom models here
+    }),
   ],
   model: openAIGpt4o,
 });
@@ -36,9 +38,6 @@ export const jokeFlow = ai.defineFlow(
     outputSchema: z.string(),
   },
   async (subject) => {
-
-
-   
    const llmResponse = await ai.generate({
       prompt: `Tell me a joke about ${subject}`,
     });
@@ -46,7 +45,66 @@ export const jokeFlow = ai.defineFlow(
   }
 );
 
+export const customModelFlow = ai.defineFlow(
+  {
+    name: 'customModelFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (subject) => {
+    const llmResponse = await ai.generate({
+      model: 'github/gpt-5',
+      prompt: `Tell me a joke about ${subject}`,
+    });
+    return llmResponse.text;
+  }
+);
+
+export const streamingFlow = ai.defineFlow(
+  {
+    name: 'streamingFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (subject) => {
+    const { response, stream } = ai.generateStream({
+      prompt: `Write a short story about ${subject}`,
+    });
+    console.log('Streaming response:');
+
+      for await (const chunk of stream) {
+        console.log('Received chunk:', chunk.text);
+    }
+
+    return (await response).text;
+  }
+);
+
+export const embedderFlow = ai.defineFlow(
+  {
+    name: 'embedderFlow',
+    inputSchema: z.object({
+      text: z.string(),
+    }),
+    outputSchema: z.object({
+      embedding: z.array(z.number()),
+      dimensions: z.number(),
+    }),
+  },
+  async (input) => {
+    const result = await ai.embed({
+      embedder: openAITextEmbedding3Small,
+      content: input.text,
+    });
+    
+    return {
+      embedding: result[0].embedding,
+      dimensions: result[0].embedding.length,
+    };
+  }
+);
+
 
 startFlowServer({
-  flows: [jokeFlow],
+  flows: [jokeFlow, customModelFlow, streamingFlow, embedderFlow],
 });

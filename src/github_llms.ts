@@ -23,7 +23,6 @@ import {
   Part,
   Role,
   ToolRequestPart,
-  Genkit,
 } from "genkit";
 
 import {
@@ -31,7 +30,10 @@ import {
   ModelAction,
   modelRef,
   ToolDefinition,
+  GenerateResponseChunkData,
 } from "genkit/model";
+
+import { model } from "genkit/plugin";
 
 import {
   ChatChoiceOutput,
@@ -1102,7 +1104,17 @@ export function toGithubRequestBody(
   request: GenerateRequest<typeof GenerationCommonConfigSchema>,
 ) {
   const model = SUPPORTED_GITHUB_MODELS[modelName];
-  if (!model) throw new Error(`Unsupported model: ${modelName}`);
+
+  // Create a default model configuration if the model is not in the supported list
+  const defaultModelConfig = {
+    info: {
+      supports: {
+        output: ["text", "json"],
+      },
+    },
+  };
+
+  const modelConfig = model || defaultModelConfig;
   const githubMessages = toGithubMessages(request.messages);
 
   const jsonMode =
@@ -1117,13 +1129,13 @@ export function toGithubRequestBody(
   const response_format = request.output?.format
     ? request.output?.format
     : request.output?.contentType;
-  if (jsonMode && model.info.supports?.output?.includes("json")) {
+  if (jsonMode && modelConfig.info.supports?.output?.includes("json")) {
     responseFormat = {
       type: "json_object",
     };
   } else if (
-    (textMode && model.info.supports?.output?.includes("text")) ||
-    model.info.supports?.output?.includes("text")
+    (textMode && modelConfig.info.supports?.output?.includes("text")) ||
+    modelConfig.info.supports?.output?.includes("text")
   ) {
     responseFormat = {
       type: "text",
@@ -1134,7 +1146,7 @@ export function toGithubRequestBody(
     );
   }
   const modelString = (request.config?.version ||
-    model.version ||
+    (model ? model.version : undefined) ||
     modelName) as string;
   const body = {
     body: {
@@ -1164,45 +1176,94 @@ export function toGithubRequestBody(
 export function githubModel(
   name: string,
   client: ModelClient,
-  ai: Genkit,
 ): ModelAction<typeof GenerationCommonConfigSchema> {
   const modelId = `github/${name}`;
-  const model = SUPPORTED_GITHUB_MODELS[name];
-  if (!model) throw new Error(`Unsupported model: ${name}`);
+  const modelRef = SUPPORTED_GITHUB_MODELS[name];
 
-  return ai.defineModel(
-    {
-      name: modelId,
-      ...model.info,
-      configSchema: SUPPORTED_GITHUB_MODELS[name].configSchema,
-    },
-    async (request, streamingCallback) => {
+  // If model is not in the supported list, create a default configuration
+  const modelInfo = modelRef
+    ? {
+        name: modelId,
+        ...modelRef.info,
+        configSchema: SUPPORTED_GITHUB_MODELS[name].configSchema,
+      }
+    : {
+        name: modelId,
+        info: {
+          label: `GitHub - ${name}`,
+          supports: {
+            multiturn: true,
+            tools: true,
+            media: false,
+            systemRole: true,
+            output: ["text", "json"],
+          },
+        },
+        configSchema: GenerationCommonConfigSchema,
+      };
+
+  return model(
+    modelInfo,
+    async (
+      request: GenerateRequest<typeof GenerationCommonConfigSchema>,
+      {
+        streamingRequested,
+        sendChunk,
+      }: {
+        streamingRequested: boolean;
+        sendChunk: (chunk: GenerateResponseChunkData) => void;
+        abortSignal: AbortSignal;
+      },
+    ) => {
       let response:
         | GetChatCompletions200Response
-        | GetChatCompletionsDefaultResponse;
+        | GetChatCompletionsDefaultResponse
+        | any;
       const body = toGithubRequestBody(name, request);
-      if (streamingCallback) {
+      if (streamingRequested) {
         body.body.stream = true;
-        response = await client.path("/chat/completions").post(body);
-        const stream = response.body;
-        const sseStream = createSseStream(stream as any);
+        response = await client
+          .path("/chat/completions")
+          .post(body)
+          .asNodeStream();
+        const sseStream = createSseStream(response.body);
+        let fullText = "";
         for await (const event of sseStream) {
           if (event.data === "[DONE]") {
             break;
           }
           for (const choice of JSON.parse(event.data).choices) {
+            const chunkText = choice.delta?.content || "";
+            if (chunkText) {
+              fullText += chunkText;
+            }
             const c = fromGithubChunkChoice(choice);
-            streamingCallback({
-              content: [{ ...c, custom: c.custom as Record<string, any> }],
-            });
+            if (c.message?.content && c.message.content.length > 0) {
+              sendChunk({
+                content: c.message.content,
+              });
+            }
           }
         }
+        return {
+          message: {
+            role: "model",
+            content: [{ text: fullText }],
+          },
+          usage: {
+            inputTokens: 0,
+            outputTokens: 0,
+            totalTokens: 0,
+          },
+        };
       } else {
         response = await client.path("/chat/completions").post(body);
       }
       return {
         message:
-          (typeof response.body === 'object' && response.body && "choices" in response.body)
+          typeof response.body === "object" &&
+          response.body &&
+          "choices" in response.body
             ? fromGithubChoice(
                 response.body.choices[0],
                 request.output?.format === "json",
@@ -1210,13 +1271,23 @@ export function githubModel(
             : { role: "model", content: [] },
         usage: {
           inputTokens:
-            (typeof response.body === 'object' && response.body && "usage" in response.body) ? response.body.usage?.prompt_tokens : 0,
+            typeof response.body === "object" &&
+            response.body &&
+            "usage" in response.body
+              ? response.body.usage?.prompt_tokens
+              : 0,
           outputTokens:
-            (typeof response.body === 'object' && response.body && "usage" in response.body)
+            typeof response.body === "object" &&
+            response.body &&
+            "usage" in response.body
               ? response.body.usage?.completion_tokens
               : 0,
           totalTokens:
-            (typeof response.body === 'object' && response.body && "usage" in response.body) ? response.body.usage?.total_tokens : 0,
+            typeof response.body === "object" &&
+            response.body &&
+            "usage" in response.body
+              ? response.body.usage?.total_tokens
+              : 0,
         },
         custom: response,
       };

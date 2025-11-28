@@ -1,7 +1,8 @@
-import { Genkit } from "genkit";
-import { genkitPlugin } from "genkit/plugin";
+import { genkitPluginV2, type ResolvableAction } from "genkit/plugin";
 import ModelClient from "@azure-rest/ai-inference";
 import { AzureKeyCredential } from "@azure/core-auth";
+import { ModelAction } from "genkit/model";
+import { GenerationCommonConfigSchema } from "genkit";
 
 import {
   githubModel,
@@ -132,33 +133,99 @@ export interface PluginOptions {
   githubToken?: string;
   endpoint?: string;
   apiVersion?: string;
+  /**
+   * Additional model names to register that are not in the predefined list.
+   * These models will be available using the 'github/model-name' format.
+   * @example ['gpt-4-turbo', 'custom-model-name']
+   */
+  customModels?: string[];
+}
+
+/**
+ * Defines a custom GitHub model that is not exported by the plugin
+ * @param name - The name of the model (e.g., "gpt-4-turbo", "custom-model")
+ * @param options - Plugin options including githubToken, endpoint, and apiVersion
+ * @returns A ModelAction that can be used with Genkit
+ *
+ * @example
+ * ```typescript
+ * import { defineGithubModel } from 'genkitx-github';
+ *
+ * const customModel = defineGithubModel('my-custom-model', {
+ *   githubToken: process.env.GITHUB_TOKEN
+ * });
+ *
+ * const response = await ai.generate({
+ *   model: customModel,
+ *   prompt: 'Hello!'
+ * });
+ * ```
+ */
+export function defineGithubModel(
+  name: string,
+  options?: PluginOptions,
+): ModelAction<typeof GenerationCommonConfigSchema> {
+  const token = options?.githubToken || process.env.GITHUB_TOKEN;
+  let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
+  const apiVersion = options?.apiVersion || "2024-12-01-preview";
+
+  if (!token) {
+    throw new Error(
+      "Please pass in the TOKEN key or set the GITHUB_TOKEN environment variable",
+    );
+  }
+  if (!endpoint) {
+    endpoint = "https://models.github.ai/inference";
+  }
+
+  const client = ModelClient(endpoint, new AzureKeyCredential(token), {
+    apiVersion: apiVersion,
+  });
+
+  return githubModel(name, client);
 }
 
 export function github(options?: PluginOptions) {
-  return genkitPlugin("github", async (ai: Genkit) => {
-    const token = options?.githubToken || process.env.GITHUB_TOKEN;
-    let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
-    const apiVersion = options?.apiVersion || "2024-12-01-preview";
-    if (!token) {
-      throw new Error(
-        "Please pass in the TOKEN key or set the GITHUB_TOKEN environment variable",
-      );
-    }
-    if (!endpoint) {
-      endpoint = "https://models.inference.ai.azure.com";
-    }
-
-    const client = ModelClient(endpoint, new AzureKeyCredential(token), {
-      apiVersion: apiVersion,
-    });
-
-    Object.keys(SUPPORTED_GITHUB_MODELS).forEach((name) => {
-      githubModel(name, client, ai);
-    });
-
-    Object.keys(SUPPORTED_EMBEDDING_MODELS).forEach((name) =>
-      githubEmbedder(name, ai, options),
+  const token = options?.githubToken || process.env.GITHUB_TOKEN;
+  let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
+  const apiVersion = options?.apiVersion || "2024-12-01-preview";
+  if (!token) {
+    throw new Error(
+      "Please pass in the TOKEN key or set the GITHUB_TOKEN environment variable",
     );
+  }
+  if (!endpoint) {
+    endpoint = "https://models.github.ai/inference";
+  }
+
+  const client = ModelClient(endpoint, new AzureKeyCredential(token), {
+    apiVersion: apiVersion,
+  });
+
+  return genkitPluginV2({
+    name: "github",
+    init: async () => {
+      const actions: ResolvableAction[] = [];
+
+      // Register models
+      for (const name of Object.keys(SUPPORTED_GITHUB_MODELS)) {
+        actions.push(githubModel(name, client));
+      }
+
+      // Register custom models if provided
+      if (options?.customModels) {
+        for (const name of options.customModels) {
+          actions.push(githubModel(name, client));
+        }
+      }
+
+      // Register embedders
+      for (const name of Object.keys(SUPPORTED_EMBEDDING_MODELS)) {
+        actions.push(githubEmbedder(name, client));
+      }
+
+      return actions;
+    },
   });
 }
 

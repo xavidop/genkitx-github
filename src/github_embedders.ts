@@ -15,14 +15,14 @@
  */
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 
-import { embedderRef, Genkit } from "genkit";
-import ModelClient, {
+import { embedderRef as createEmbedderRef } from "genkit";
+import type ModelClient from "@azure-rest/ai-inference";
+import type {
   GetEmbeddings200Response,
   GetEmbeddingsParameters,
 } from "@azure-rest/ai-inference";
 import { z } from "zod";
-import { type PluginOptions } from "./index.js";
-import { AzureKeyCredential } from "@azure/core-auth";
+import { embedder } from "genkit/plugin";
 
 export const TextEmbeddingConfigSchema = z.object({
   dimensions: z.number().optional(),
@@ -35,7 +35,7 @@ export type TextEmbeddingGeckoConfig = z.infer<
 
 export const TextEmbeddingInputSchema = z.string();
 
-export const openAITextEmbedding3Small = embedderRef({
+export const openAITextEmbedding3Small = createEmbedderRef({
   name: "github/text-embedding-3-small",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -47,7 +47,7 @@ export const openAITextEmbedding3Small = embedderRef({
   },
 });
 
-export const openAITextEmbedding3Large = embedderRef({
+export const openAITextEmbedding3Large = createEmbedderRef({
   name: "github/text-embedding-3-large",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -59,7 +59,7 @@ export const openAITextEmbedding3Large = embedderRef({
   },
 });
 
-export const cohereEmbedv3English = embedderRef({
+export const cohereEmbedv3English = createEmbedderRef({
   name: "github/cohere-embed-v3-english",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -71,7 +71,7 @@ export const cohereEmbedv3English = embedderRef({
   },
 });
 
-export const cohereEmbedv3Multilingual = embedderRef({
+export const cohereEmbedv3Multilingual = createEmbedderRef({
   name: "github/cohere-embed-v3-multilingual",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -83,7 +83,7 @@ export const cohereEmbedv3Multilingual = embedderRef({
   },
 });
 
-export const cohereEmbedv4 = embedderRef({
+export const cohereEmbedv4 = createEmbedderRef({
   name: "github/embed-v-4-0",
   configSchema: TextEmbeddingConfigSchema,
   info: {
@@ -105,34 +105,23 @@ export const SUPPORTED_EMBEDDING_MODELS: Record<string, any> = {
 
 export function githubEmbedder(
   name: string,
-  ai: Genkit,
-  options?: PluginOptions,
+  client: ReturnType<typeof ModelClient>,
 ) {
-  const token = options?.githubToken || process.env.GITHUB_TOKEN;
-  let endpoint = options?.endpoint || process.env.GITHUB_ENDPOINT;
-  if (!token) {
-    throw new Error(
-      "Please pass in the TOKEN key or set the GITHUB_TOKEN environment variable",
-    );
-  }
-  if (!endpoint) {
-    endpoint = "https://models.inference.ai.azure.com";
-  }
+  const modelRef = SUPPORTED_EMBEDDING_MODELS[name];
+  if (!modelRef) throw new Error(`Unsupported model: ${name}`);
 
-  const client = ModelClient(endpoint, new AzureKeyCredential(token));
-  const model = SUPPORTED_EMBEDDING_MODELS[name];
-
-  return ai.defineEmbedder(
+  return embedder(
     {
-      info: model.info!,
+      info: modelRef.info!,
       configSchema: TextEmbeddingConfigSchema,
-      name: model.name,
+      name: modelRef.name,
     },
-    async (input, options) => {
+    async (request) => {
+      const { input, options } = request;
       const body = {
         body: {
           model: name,
-          input: input.map((d) => d.text),
+          input: input.map((d: any) => d.text),
           dimensions: options?.dimensions,
           encoding_format: options?.encodingFormat,
         },

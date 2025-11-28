@@ -140,6 +140,39 @@ console.log(result.then((res) => res.text));
 
 For more detailed examples and the explanation of other functionalities, refer to the [official Genkit documentation](https://firebase.google.com/docs/genkit/get-started).
 
+## Using Custom Models
+
+If you want to use a model that is not exported by this plugin, you can register it using the `customModels` option when initializing the plugin:
+
+```typescript
+import { genkit, z } from 'genkit';
+import { github } from 'genkitx-github';
+
+const ai = genkit({
+  plugins: [
+    github({
+      customModels: ['gpt-5', 'my-custom-model'], // Register custom models
+    }),
+  ],
+});
+
+// Use the custom model by specifying its name as a string
+export const customModelFlow = ai.defineFlow(
+  {
+    name: 'customModelFlow',
+    inputSchema: z.string(),
+    outputSchema: z.string(),
+  },
+  async (subject) => {
+    const llmResponse = await ai.generate({
+      model: 'github/gpt-5', // Use any registered custom model
+      prompt: `Tell me about ${subject}`,
+    });
+    return llmResponse.text;
+  }
+);
+```
+
 ## Supported models
 
 This plugin supports all currently available **Chat/Completion** and **Embeddings** models from GitHub Models. This plugin supports image input and multimodal models.
