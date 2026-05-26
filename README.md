@@ -20,6 +20,7 @@
 </div>
 </br>
 
+
 **`genkitx-github`** is a community plugin for using GitHub Models APIs with
 [Firebase Genkit](https://github.com/firebase/genkit). Built by [**Xavier Portilla Edo**](https://github.com/xavidop).
 
