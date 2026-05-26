@@ -18,7 +18,6 @@
    <img alt="GitHub Issues or Pull Requests" src="https://img.shields.io/github/issues-pr/xavidop/genkitx-github?color=blue">
    <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/xavidop/genkitx-github">
 </div>
-
 </br>
 
 **`genkitx-github`** is a community plugin for using GitHub Models APIs with
